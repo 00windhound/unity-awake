@@ -119,6 +119,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &126887689 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3472536068705977453, guid: 333a99edaacbb934f98f2fff348f08c7, type: 3}
+  m_PrefabInstance: {fileID: 895058120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &126887695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126887689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54766fabe5afaff4caea2968aff0ae7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::plants
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +148,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,6 +274,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cfcea843137714a9c9a1f0039f128a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FreeCamera
+  moveSpeed: 10
+  lookSpeed: 2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,8 +576,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3472536068705977453, guid: 333a99edaacbb934f98f2fff348f08c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 126887695}
   m_SourcePrefab: {fileID: 100100000, guid: 333a99edaacbb934f98f2fff348f08c7, type: 3}
+--- !u!1 &1114973672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3472536068705977453, guid: 333a99edaacbb934f98f2fff348f08c7, type: 3}
+  m_PrefabInstance: {fileID: 6061803572626564144}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1114973678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114973672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54766fabe5afaff4caea2968aff0ae7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::plants
 --- !u!1 &1115627490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1202,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3472536068705977453, guid: 333a99edaacbb934f98f2fff348f08c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1114973678}
   m_SourcePrefab: {fileID: 100100000, guid: 333a99edaacbb934f98f2fff348f08c7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -28,11 +28,11 @@ public class plants : MonoBehaviour
             }
             else if (transform.localScale.x < 1.0f)
             {
-                transform.localScale *= 1.1f; // Grow plant by 10%
+                transform.localScale *= 1.01f; // Grow plant by 10%
             }
         }
         
-        if (count == 20 || count == 40 || count == 60 || count == 80 || count == 100)
+        if (count == 200 || count == 400 || count == 600 || count == 800 || count == 1000)
         {
             // spawn baby plant
             Vector3 offset = new Vector3(
@@ -44,7 +44,7 @@ public class plants : MonoBehaviour
             Instantiate(gameObject, transform.position + offset, Quaternion.identity);
         }
 
-        if (count > 120)
+        if (count > 1000)
         {
             transform.localScale *= 0.99f; // Shrink plant by 1%
         }
@@ -55,11 +55,4 @@ public class plants : MonoBehaviour
     }
 
 
-    int new_plant()
-    {
-        Vector3 offset = new Vector3(
-    Random.Range(-3f, 3f),
-    0,
-    Random.Range(-3f, 3f)
-    }
 }
