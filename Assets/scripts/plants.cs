@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
 using UnityEngine;
@@ -13,7 +14,16 @@ public class plants : MonoBehaviour
     {
         // change scale to baby size
         resize(0.2f);
+        if(crowded())
+        {
+            Destroy(gameObject); // destroy plant if too crowded
+        }
         count = 0;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
+        {// snap plant to ground
+            transform.position = hit.point;
+        }
        
     }
 
@@ -27,12 +37,12 @@ public class plants : MonoBehaviour
             bool seeground = false;
             bool isupright = true;
             RaycastHit hit;// if on the ground
-            if (Physics.Raycast(model.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
+            if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
             {
                 seeground = true;
             }
 
-            float upright = UnityEngine.Vector3.Dot(model.up, UnityEngine.Vector3.up);
+            float upright = UnityEngine.Vector3.Dot(transform.up, UnityEngine.Vector3.up);
             if (upright < 0.5f)
             {
                 isupright = false;
@@ -50,7 +60,10 @@ public class plants : MonoBehaviour
             
             else if (model.localScale.x < 1.0f)
             {
-                resize(1.01f); // Grow plant by 1%
+                if (!crowded())
+                {
+                    resize(1.01f); // Grow plant by 1%
+                }
             }
         }
         
@@ -67,7 +80,7 @@ public class plants : MonoBehaviour
             }
         }
 
-        if (count > 4000)
+        if (count > 4000)// old age
         {
             resize(0.99f);
             if (model.localScale.x < 0.2f)
@@ -85,7 +98,19 @@ public class plants : MonoBehaviour
         model.localScale = scale;
         model.localPosition = new UnityEngine.Vector3(0f, scale.y / 2f, 0f);
     }
+
+
+    public bool crowded()
+    {
+        float radius = model.localScale.x;
+        Collider[] hits = Physics.OverlapSphere(
+        transform.position,
+        radius,
+        plantLayer
+    );
+    int count = hits.Length;
+    return count > 2;
+    }
 }
 
 
-// model.localPosition = new Vector3(0f, growth / 2f, 0f);
