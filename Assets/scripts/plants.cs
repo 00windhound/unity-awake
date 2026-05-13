@@ -13,6 +13,7 @@ public class plants : MonoBehaviour
     {
         // change scale to baby size
         resize(0.2f);
+        count = 0;
        
     }
 
@@ -53,7 +54,7 @@ public class plants : MonoBehaviour
             }
         }
         
-        if (count % 100 == 0)
+        if (count % 110 == 0)
         {
             
             if (model.localScale.x >= 1.0f)
@@ -66,7 +67,7 @@ public class plants : MonoBehaviour
             }
         }
 
-        if (count > 1900)
+        if (count > 4000)
         {
             resize(0.99f);
             if (model.localScale.x < 0.2f)
