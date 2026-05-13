@@ -7,6 +7,7 @@ using UnityEngine;
 public class plants : MonoBehaviour
 {
     public LayerMask groundLayer; 
+    public LayerMask plantLayer;
     public Transform model;
     int count = 0;
 
@@ -104,12 +105,12 @@ public class plants : MonoBehaviour
     {
         float radius = model.localScale.x;
         Collider[] hits = Physics.OverlapSphere(
-        transform.position,
-        radius,
-        plantLayer
-    );
-    int count = hits.Length;
-    return count > 2;
+            transform.position,
+            radius,
+            ~0//changed
+        );
+        int count = hits.Length;
+        return count > 4;
     }
 }
 
