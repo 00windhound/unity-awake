@@ -10,7 +10,7 @@ public class plants : livingThing
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
     public Transform model;
-    public int maxAge = 10000;
+    public int maxAge = 3000;
     
 
     protected override void Start()
@@ -20,6 +20,7 @@ public class plants : livingThing
         resize(0.2f);
         if(crowded())
         {
+            global.Instance.returnPlantId(id);
             Destroy(gameObject); // destroy plant if too crowded
         }
         age = 0;
@@ -59,6 +60,7 @@ public class plants : livingThing
                 resize(0.99f); // Shrink plant by 1%
                 if (model.localScale.x < 0.2f)
                 {
+                    global.Instance.returnPlantId(id);
                     Destroy(gameObject); // destroy small plant
                 } 
             }
@@ -67,7 +69,7 @@ public class plants : livingThing
             {
                 if (!crowded())
                 {
-                    resize(1.01f); // Grow plant by 1%
+                    resize(1.01f); // Grow plant
                 }
             }
         }
@@ -91,7 +93,8 @@ public class plants : livingThing
             resize(0.97f);
             if (model.localScale.x < 0.2f)
             {
-            Destroy(gameObject); // Destroy old plant
+                global.Instance.returnPlantId(id);
+                Destroy(gameObject); // Destroy old plant
             }
         }
     }

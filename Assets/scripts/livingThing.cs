@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class livingThing : MonoBehaviour
 {
-    public int id;
+    public long id;
     public int age = 0;
    
     
@@ -14,13 +14,11 @@ public class livingThing : MonoBehaviour
     protected virtual void Start()
     {
         id = global.Instance.newPlantId();
-        UnityEngine.Debug.Log("i got ID: " + id);
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
        age++;
-       UnityEngine.Debug.Log("age: " + age);
     }
 }
