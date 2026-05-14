@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -10,7 +11,9 @@ public class plants : livingThing
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
     public Transform model;
-    public int maxAge = 3000;
+    public Renderer plantRenderer;
+    public plantDNA dna;
+    
     
 
     protected override void Start()
@@ -87,7 +90,7 @@ public class plants : livingThing
             }
         }
 
-        if (age > maxAge)
+        if (age > dna.maxAge)
         {
             // old age filter
             resize(0.97f);
