@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class global : MonoBehaviour
 {
+    public static global Instance;
     int plantId = 0;
     int animalId = 0;
     
-    void Start()
+
+    void Awake()
     {
-        
+        Instance = this;
     }
 
     
@@ -19,10 +21,16 @@ public class global : MonoBehaviour
         
     }
 
-    int newPlantId()
+    public int newPlantId()
     {
         plantId++;
         return plantId;
+    }
+
+    public int newAnimalId()
+    {
+        animalId++;
+        return animalId;
     }
 
 }

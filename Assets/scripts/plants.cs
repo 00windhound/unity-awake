@@ -1,25 +1,28 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
+using System.Security.Cryptography;
 using UnityEngine;
 
 
-public class plants : MonoBehaviour
+public class plants : livingThing
 {
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
     public Transform model;
-    int count = 0;
+    public int maxAge = 10000;
+    
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         // change scale to baby size
         resize(0.2f);
         if(crowded())
         {
             Destroy(gameObject); // destroy plant if too crowded
         }
-        count = 0;
+        age = 0;
         RaycastHit hit;
         if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
         {// snap plant to ground
@@ -28,12 +31,13 @@ public class plants : MonoBehaviour
        
     }
 
-    void Update()
+    protected override void Update()
     {
-        count++;
+        base.Update();
         
         
-        if (count % 10 == 0)
+        
+        if (age % 10 == 0)
         {
             bool seeground = false;
             bool isupright = true;
@@ -68,7 +72,7 @@ public class plants : MonoBehaviour
             }
         }
         
-        if (count % 110 == 0)
+        if (age % 130 == 0)
         {
             
             if (model.localScale.x >= 1.0f)
@@ -81,9 +85,10 @@ public class plants : MonoBehaviour
             }
         }
 
-        if (count > 4000)// old age
+        if (age > maxAge)
         {
-            resize(0.99f);
+            // old age filter
+            resize(0.97f);
             if (model.localScale.x < 0.2f)
             {
             Destroy(gameObject); // Destroy old plant
