@@ -3,6 +3,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Numerics;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 
@@ -80,13 +81,10 @@ public class plants : livingThing
         if (age % 130 == 0)
         {
             
-            if (model.localScale.x >= 1.0f)
+            if (model.localScale.x >= 1.0f)// decide to reproduce
             {
-                GameObject baby =Instantiate( // create new plant
-                    gameObject, 
-                    transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f)), 
-                    UnityEngine.Quaternion.identity
-                );
+                UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
+                spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
             }
         }
 
@@ -118,7 +116,7 @@ public class plants : livingThing
         Collider[] hits = Physics.OverlapSphere(
             transform.position,
             radius,
-            ~0//changed
+            ~0
         );
         int count = hits.Length;
         return count > 4;

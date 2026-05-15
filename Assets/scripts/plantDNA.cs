@@ -38,7 +38,7 @@ public class plantDNA
 
     //breeding
     //behavior
-    public int maxAge = 5000;
+    public int maxAge = 6000;
     //behavior
 
     
