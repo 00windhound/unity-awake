@@ -9,7 +9,7 @@ public class player : MonoBehaviour
     // Camera Rotation
     public float mouseSensitivity = 2f;
     private float verticalRotation = 0f;
-    private Transform cameraTransform;
+    public Transform cameraTransform;
     
     // Ground Movement
     private Rigidbody rb;
@@ -32,7 +32,6 @@ public class player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        cameraTransform = Camera.main.transform;
 
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
@@ -48,8 +47,11 @@ public class player : MonoBehaviour
     void Update()
     {// build toggle character mode
         
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveForward = Input.GetAxisRaw("Vertical");
+        moveHorizontal = Input.GetAxis("Horizontal");
+        moveForward = Input.GetAxis("Vertical");
+
+        float turn = Input.GetAxis("Horizontal");
+        transform.Rotate(0, turn * 240f * Time.deltaTime, 0);
 
         RotateCamera();
 
@@ -80,7 +82,7 @@ public class player : MonoBehaviour
     void MovePlayer()
     {
 
-        Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveForward).normalized;
+        Vector3 movement =  transform.forward * moveForward;
         Vector3 targetVelocity = movement * MoveSpeed;
 
         // Apply movement to the Rigidbody
@@ -98,8 +100,6 @@ public class player : MonoBehaviour
 
     void RotateCamera()
     {
-        float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
-        transform.Rotate(0, horizontalRotation, 0);
 
         verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);

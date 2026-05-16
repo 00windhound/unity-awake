@@ -53,9 +53,16 @@ MonoBehaviour:
     m_Bits: 8
   plantLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   model: {fileID: 6571895872117194759}
-  maxAge: 5000
+  plantRenderer: {fileID: 0}
+  dna:
+    sizeLength: 1
+    sizeThickness: 1
+    nutritionProtein: 0
+    nutritionToxin: 0
+    nutritionSugar: 0
+    maxAge: 6000
 --- !u!135 &3400182174136274100
 SphereCollider:
   m_ObjectHideFlags: 0
