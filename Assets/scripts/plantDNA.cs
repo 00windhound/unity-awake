@@ -12,8 +12,8 @@ public class plantDNA
    
     // stem
     public UnityEngine.Color stemColor = UnityEngine.Color.green;
-    public int sizeLength = 1;
-    public int sizeThickness = 1;
+    public float maxHeight = 3;
+    public float maxThickness = 1;
 
     public int nutritionProtein = 0;
     public int nutritionToxin = 0;
@@ -37,7 +37,7 @@ public class plantDNA
 
         
     // breeding
-
+    public int freaquency = 130;
     //breeding
     //behavior
     public int maxAge = 6000;

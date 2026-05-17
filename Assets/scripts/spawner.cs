@@ -31,15 +31,14 @@ public class spawner : MonoBehaviour
                 break;
             case 1:// stem color
                 babyDna.stemColor = new Color(
-                    Mathf.Clamp01(babyDna.stemColor.r + Random.Range(-0.4f, 0.4f)),
-                    Mathf.Clamp01(babyDna.stemColor.g + Random.Range(-0.4f, 0.4f)),
-                    Mathf.Clamp01(babyDna.stemColor.b + Random.Range(-0.4f, 0.4f))
+                    Mathf.Clamp01(babyDna.stemColor.r + Random.Range(-0.2f, 0.2f)),
+                    Mathf.Clamp01(babyDna.stemColor.g + Random.Range(-0.2f, 0.2f)),
+                    Mathf.Clamp01(babyDna.stemColor.b + Random.Range(-0.2f, 0.2f))
                 );
                 break;
             default:
                 break;
         }
-        UnityEngine.Debug.Log("baby dna: " + babyDna.stemColor);
         baby.GetComponent<plants>().dna = babyDna;
     }
     

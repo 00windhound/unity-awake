@@ -14,28 +14,29 @@ public class plants : livingThing
     public Transform model;
     public Renderer plantRenderer;
     public plantDNA dna;
+    public float growth = 0.1f;
     
     
 
     protected override void Start()
     {
         base.Start();
-        // change scale to baby size
         plantRenderer = GetComponentInChildren<Renderer>();
-        resize(0.2f);
+        applyDna();
+        
+        Resize();
+        age = 0;
         if(crowded())
         {
             global.Instance.returnPlantId(id);
             Destroy(gameObject); // destroy plant if too crowded
         }
-        age = 0;
+        
         RaycastHit hit;
         if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
         {// snap plant to ground
             transform.position = hit.point;
         }
-        applyDna();
-       
     }
 
     protected override void Update()
@@ -63,27 +64,28 @@ public class plants : livingThing
 
             if (!seeground || !isupright)
             {
-                resize(0.99f); // Shrink plant by 1%
-                if (model.localScale.x < 0.2f)
+                growth -= 0.01f;
+                Resize(); // Shrink plant by 1%
+                if (growth < 0.1f)
                 {
                     global.Instance.returnPlantId(id);
                     Destroy(gameObject); // destroy small plant
                 } 
             }
             
-            else if (model.localScale.x < 1.0f)
+            else if (growth < 1.0f)
             {
                 if (!crowded())
                 {
-                    resize(1.01f); // Grow plant
+                    growth += 0.01f;
+                    Resize(); // Grow plant
                 }
             }
         }
-        
-        if (age % 130 == 0)
-        {
-            
-            if (model.localScale.x >= 1.0f)// decide to reproduce
+        // breading
+        if (dna.freaquency > 0 && age % dna.freaquency == 0)
+        { // plant age also decides if ready to breed
+            if (growth > dna.maxHeight * 0.8f)
             {
                 UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
                 spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
@@ -93,8 +95,9 @@ public class plants : livingThing
         if (age > dna.maxAge)
         {
             // old age filter
-            resize(0.97f);
-            if (model.localScale.x < 0.2f)
+            growth -= 0.01f;
+            Resize(); // Shrink plant by 1%
+            if (growth < 0.1f)
             {
                 global.Instance.returnPlantId(id);
                 Destroy(gameObject); // Destroy old plant
@@ -102,13 +105,16 @@ public class plants : livingThing
         }
     }
 
-    public void resize(float change)
+    public void Resize()
     {
-        // grow or shrink plant by change percent
-        UnityEngine.Vector3 scale = model.localScale;
-        scale *= change;
-        model.localScale = scale;
-        model.localPosition = new UnityEngine.Vector3(0f, scale.y / 2f, 0f);
+        float xz = growth;
+        float y = growth;
+
+        if (growth > dna.maxHeight) y = dna.maxHeight; 
+        if (growth > dna.maxThickness) xz = dna.maxThickness;
+      
+        model.localScale = new UnityEngine.Vector3(xz, y, xz);
+        model.localPosition = new UnityEngine.Vector3(0f, y / 2f, 0f);
     }
 
 
@@ -129,6 +135,7 @@ public class plants : livingThing
     {
         // apply dna to plant
         plantRenderer.material.color = dna.stemColor;
+        //model.localScale = new UnityEngine.Vector3(dna.sizeThickness, dna.sizeHeight, dna.sizeThickness);
     }
 }
 
