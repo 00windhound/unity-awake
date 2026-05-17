@@ -21,6 +21,7 @@ public class plants : livingThing
     {
         base.Start();
         // change scale to baby size
+        plantRenderer = GetComponentInChildren<Renderer>();
         resize(0.2f);
         if(crowded())
         {
@@ -33,6 +34,7 @@ public class plants : livingThing
         {// snap plant to ground
             transform.position = hit.point;
         }
+        applyDna();
        
     }
 
@@ -120,6 +122,13 @@ public class plants : livingThing
         );
         int count = hits.Length;
         return count > 4;
+    }
+
+
+    public void applyDna()
+    {
+        // apply dna to plant
+        plantRenderer.material.color = dna.stemColor;
     }
 }
 
