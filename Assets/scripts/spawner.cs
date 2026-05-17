@@ -24,7 +24,7 @@ public class spawner : MonoBehaviour
         plantDNA babyDna = parentDna.Clone();
 
         // dna mutation
-        int mutateGene = Random.Range(0, 2);
+        int mutateGene = Random.Range(0, 5);
         switch(mutateGene)
         {
             case 0:// none
@@ -35,6 +35,18 @@ public class spawner : MonoBehaviour
                     Mathf.Clamp01(babyDna.stemColor.g + Random.Range(-0.2f, 0.2f)),
                     Mathf.Clamp01(babyDna.stemColor.b + Random.Range(-0.2f, 0.2f))
                 );
+                break;
+            case 2://max height
+                babyDna.maxHeight = Mathf.Clamp(babyDna.maxHeight + Random.Range(-0.2f, 0.2f), 0.4f, 3f);
+                break;
+            case 3://max thickness
+                babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.2f, 0.2f), 0.4f, 3f);
+                break;
+            case 4://breeding frequency
+                babyDna.freaquency = Mathf.Clamp(babyDna.freaquency + Random.Range(-10, 10), 50, 300);
+                break;
+            case 5://max age
+                babyDna.maxAge = Mathf.Clamp(babyDna.maxAge + Random.Range(-500, 500), 2000, 10000);
                 break;
             default:
                 break;

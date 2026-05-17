@@ -12,7 +12,7 @@ public class plantDNA
    
     // stem
     public UnityEngine.Color stemColor = UnityEngine.Color.green;
-    public float maxHeight = 3;
+    public float maxHeight = 1;
     public float maxThickness = 1;
 
     public int nutritionProtein = 0;

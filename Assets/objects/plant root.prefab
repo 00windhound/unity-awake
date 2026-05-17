@@ -57,12 +57,15 @@ MonoBehaviour:
   model: {fileID: 6571895872117194759}
   plantRenderer: {fileID: 0}
   dna:
-    sizeLength: 1
-    sizeThickness: 1
+    stemColor: {r: 0, g: 1, b: 0, a: 1}
+    maxHeight: 1
+    maxThickness: 1
     nutritionProtein: 0
     nutritionToxin: 0
     nutritionSugar: 0
+    freaquency: 130
     maxAge: 6000
+  growth: 0.1
 --- !u!135 &3400182174136274100
 SphereCollider:
   m_ObjectHideFlags: 0

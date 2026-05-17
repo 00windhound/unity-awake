@@ -73,7 +73,7 @@ public class plants : livingThing
                 } 
             }
             
-            else if (growth < 1.0f)
+            else if (growth < dna.maxHeight || growth < dna.maxThickness)
             {
                 if (!crowded())
                 {
@@ -84,7 +84,7 @@ public class plants : livingThing
         }
         // breading
         if (dna.freaquency > 0 && age % dna.freaquency == 0)
-        { // plant age also decides if ready to breed
+        { 
             if (growth > dna.maxHeight * 0.8f)
             {
                 UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
