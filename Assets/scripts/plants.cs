@@ -83,7 +83,7 @@ public class plants : livingThing
             }
         }
         // breading
-        if (dna.freaquency > 0 && age % dna.freaquency == 0)
+        if (dna.freaquency > 0 && age % dna.freaquency == 0 && !crowded())
         { 
             if (growth > dna.maxHeight * 0.8f)
             {
@@ -119,7 +119,7 @@ public class plants : livingThing
 
 
     public bool crowded()
-    {
+    {// return true if too crowded
         float radius = model.localScale.x;
         Collider[] hits = Physics.OverlapSphere(
             transform.position,

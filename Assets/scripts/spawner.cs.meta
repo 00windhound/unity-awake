@@ -3,7 +3,9 @@ guid: a976810a0fb9daf43947c559be1c60d8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - plantPrefab: {fileID: 396918618438655067, guid: aae14ae2bb8fa3a46894537fc9042f37, type: 3}
+  - animalPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
