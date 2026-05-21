@@ -46,7 +46,7 @@ public class spawner : MonoBehaviour
 
     void Update()
     {
-        UnityEngine.Debug.Log("spawn queue count: " + spawnQueue.Count);
+        //UnityEngine.Debug.Log("spawn queue count: " + spawnQueue.Count);
         if (spawnQueue.Count > 0)// if not too old
         {
             for (int i = 0; i < plantsPerFrame && spawnQueue.Count > 0; i++)
