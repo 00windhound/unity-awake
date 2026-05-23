@@ -133,9 +133,12 @@ public class plants : livingThing
 
     public void applyDna()
     {
-        // apply dna to plant
+        // apply base color
         plantRenderer.material.color = dna.stemColor;
-        //model.localScale = new UnityEngine.Vector3(dna.sizeThickness, dna.sizeHeight, dna.sizeThickness);
+        // change plant shape based on dna
+        //Mesh mesh = Instantiate(global.Instance.plantMesh);
+        //Vector3[] vertices = mesh.vertices;
+
     }
 }
 
