@@ -23,7 +23,6 @@ public class plants : livingThing
         base.Start();
         plantRenderer = GetComponentInChildren<Renderer>();
         applyDna();
-        
         Resize();
         age = 0;
         if(crowded())
@@ -114,7 +113,7 @@ public class plants : livingThing
         if (growth > dna.maxThickness) xz = dna.maxThickness;
       
         model.localScale = new UnityEngine.Vector3(xz, y, xz);
-        model.localPosition = new UnityEngine.Vector3(0f, y / 2f, 0f);
+        model.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
     }
 
 
