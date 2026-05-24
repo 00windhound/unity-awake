@@ -139,8 +139,13 @@ MonoBehaviour:
     m_Bits: 64
   model: {fileID: 5648097031643122698}
   plantRenderer: {fileID: 0}
+  trunkMeshFilter: {fileID: 5133131842559267640}
   dna:
     stemColor: {r: 0, g: 1, b: 0, a: 1}
+    trunkSegment1Width: 1
+    trunkSegment2Width: 1
+    trunkSegment3Width: 1
+    trunkSegment4Width: 1
     maxHeight: 1
     maxThickness: 1
     nutritionProtein: 0

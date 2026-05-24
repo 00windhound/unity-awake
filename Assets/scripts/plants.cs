@@ -13,8 +13,10 @@ public class plants : livingThing
     public LayerMask plantLayer;
     public Transform model;
     public Renderer plantRenderer;
+    public MeshFilter trunkMeshFilter;
     public plantDNA dna;
-    public float growth = 0.1f;
+    public float growth = 0.01f;
+
     
     
 
@@ -65,7 +67,7 @@ public class plants : livingThing
             {
                 growth -= 0.01f;
                 Resize(); // Shrink plant by 1%
-                if (growth < 0.1f)
+                if (growth < 0.01f)
                 {
                     global.Instance.returnPlantId(id);
                     Destroy(gameObject); // destroy small plant
@@ -96,7 +98,7 @@ public class plants : livingThing
             // old age filter
             growth -= 0.01f;
             Resize(); // Shrink plant by 1%
-            if (growth < 0.1f)
+            if (growth < 0.01f)
             {
                 global.Instance.returnPlantId(id);
                 Destroy(gameObject); // Destroy old plant
@@ -135,8 +137,52 @@ public class plants : livingThing
         // apply base color
         plantRenderer.material.color = dna.stemColor;
         // change plant shape based on dna
-        //Mesh mesh = Instantiate(global.Instance.plantMesh);
-        //Vector3[] vertices = mesh.vertices;
+        
+
+        //Mesh origionalTrunkMesh;
+        Mesh workingTrunkMesh;
+        UnityEngine.Vector3[] origionalVerts;
+        workingTrunkMesh = Instantiate(trunkMeshFilter.mesh);
+        trunkMeshFilter.mesh = workingTrunkMesh;// create and assign clone
+        origionalVerts = workingTrunkMesh.vertices;
+        UnityEngine.Vector3[] newVerts = new UnityEngine.Vector3[origionalVerts.Length];
+        origionalVerts.CopyTo(newVerts, 0);
+        float minY = float.MaxValue;
+        float maxY = float.MinValue;
+        for (int i = 0; i < newVerts.Length; i++)
+        {
+            if (origionalVerts[i].y < minY) minY = origionalVerts[i].y;
+            if (origionalVerts[i].y > maxY) maxY = origionalVerts[i].y;
+        }
+
+        // make changes here
+        for (int i = 0; i < newVerts.Length; i++)
+        {
+            float heightPercent = (origionalVerts[i].y - minY) / (maxY - minY);
+            float width = 1f;
+            if (heightPercent < 0.25f)
+            {
+                width = dna.trunkSegment1Width;
+            }
+            else if (heightPercent < 0.5f)
+            {
+                width = dna.trunkSegment2Width;
+            }
+            else if (heightPercent < 0.75f)
+            {
+                width = dna.trunkSegment3Width;
+            }
+            else
+            {
+                width = dna.trunkSegment4Width;
+            }
+            newVerts[i].x *= width;
+            newVerts[i].z *= width;
+        }
+
+        workingTrunkMesh.vertices = newVerts;
+        workingTrunkMesh.RecalculateBounds();
+        workingTrunkMesh.RecalculateNormals();
 
     }
 }
