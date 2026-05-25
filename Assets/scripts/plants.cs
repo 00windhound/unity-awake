@@ -178,6 +178,7 @@ public class plants : livingThing
             }
             newVerts[i].x *= width;
             newVerts[i].z *= width;
+
         }
 
         workingTrunkMesh.vertices = newVerts;

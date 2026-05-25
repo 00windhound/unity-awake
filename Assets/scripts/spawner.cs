@@ -61,7 +61,7 @@ public class spawner : MonoBehaviour
                 plantDNA babyDna = request.dna.Clone();
 
                 // dna mutation
-                int mutateGene = Random.Range(0, 5);
+                int mutateGene = Random.Range(0, 11);
                 switch(mutateGene)
                 {
                     case 0:// none
@@ -73,16 +73,28 @@ public class spawner : MonoBehaviour
                             Mathf.Clamp01(babyDna.stemColor.b + Random.Range(-0.2f, 0.2f))
                         );
                         break;
-                    case 2://max height
+                    case 2:// trunk segment 1
+                        babyDna.trunkSegment1Width = Mathf.Clamp(babyDna.trunkSegment1Width + Random.Range(-0.2f, 0.2f), 0.1f, 5f);
+                        break;
+                    case 3:// trunk segment 2
+                        babyDna.trunkSegment2Width = Mathf.Clamp(babyDna.trunkSegment2Width + Random.Range(-0.2f, 0.2f), 0.1f, 5f);
+                        break;
+                    case 4:// trunk segment 3
+                        babyDna.trunkSegment3Width = Mathf.Clamp(babyDna.trunkSegment3Width + Random.Range(-0.2f, 0.2f), 0.1f, 5f);
+                        break;
+                    case 5:// trunk segment 4
+                        babyDna.trunkSegment4Width = Mathf.Clamp(babyDna.trunkSegment4Width + Random.Range(-0.2f, 0.2f), 0.1f, 5f);
+                        break;
+                    case 6://max height
                         babyDna.maxHeight = Mathf.Clamp(babyDna.maxHeight + Random.Range(-0.2f, 0.2f), 0.4f, 3f);
                         break;
-                    case 3://max thickness
+                    case 7://max thickness
                         babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.2f, 0.2f), 0.4f, 3f);
                         break;
-                    case 4://breeding frequency
+                    case 8://breeding frequency
                         babyDna.freaquency = Mathf.Clamp(babyDna.freaquency + Random.Range(-10, 10), 50, 300);
                         break;
-                    case 5://max age
+                    case 9://max age
                         babyDna.maxAge = Mathf.Clamp(babyDna.maxAge + Random.Range(-500, 500), 2000, 10000);
                         break;
                     default:
