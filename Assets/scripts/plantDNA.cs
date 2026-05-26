@@ -28,7 +28,9 @@ public class plantDNA
     // stick
     public int stickCount = 0;
     public float stickLength = 0;
+    //length distribution? longer, shorter near top, bottom?
     public float stickThickness = 0;
+    public float stickLowestY = 0;
     //stick
 
 

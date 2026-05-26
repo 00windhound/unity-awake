@@ -11,7 +11,9 @@ public class plants : livingThing
 {
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
-    public Transform model;
+    public Transform trunk;
+    public GameObject stickPrefab;
+    //public Transform sticks;
     public Renderer plantRenderer;
     public MeshFilter trunkMeshFilter;
     public plantDNA dna;
@@ -27,6 +29,7 @@ public class plants : livingThing
         applyDna();
         Resize();
         age = 0;
+        // calculate max age based on size
         if(crowded())
         {
             global.Instance.returnPlantId(id);
@@ -114,14 +117,15 @@ public class plants : livingThing
         if (growth > dna.maxHeight) y = dna.maxHeight; 
         if (growth > dna.maxThickness) xz = dna.maxThickness;
       
-        model.localScale = new UnityEngine.Vector3(xz, y, xz);
-        model.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
+        trunk.localScale = new UnityEngine.Vector3(xz, y, xz);
+        trunk.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
+        // change branches here
     }
 
 
     public bool crowded()
     {// return true if too crowded
-        float radius = model.localScale.x;
+        float radius = trunk.localScale.x;
         Collider[] hits = Physics.OverlapSphere(
             transform.position,
             radius,
@@ -136,10 +140,9 @@ public class plants : livingThing
     {
         // apply base color
         plantRenderer.material.color = dna.stemColor;
-        // change plant shape based on dna
         
-
-        //Mesh origionalTrunkMesh;
+        
+        // change trunk shape
         Mesh workingTrunkMesh;
         UnityEngine.Vector3[] origionalVerts;
         workingTrunkMesh = Instantiate(trunkMeshFilter.mesh);
@@ -154,8 +157,6 @@ public class plants : livingThing
             if (origionalVerts[i].y < minY) minY = origionalVerts[i].y;
             if (origionalVerts[i].y > maxY) maxY = origionalVerts[i].y;
         }
-
-        // make changes here
         for (int i = 0; i < newVerts.Length; i++)
         {
             float heightPercent = (origionalVerts[i].y - minY) / (maxY - minY);
@@ -178,13 +179,18 @@ public class plants : livingThing
             }
             newVerts[i].x *= width;
             newVerts[i].z *= width;
-
         }
-
         workingTrunkMesh.vertices = newVerts;
         workingTrunkMesh.RecalculateBounds();
         workingTrunkMesh.RecalculateNormals();
 
+
+        // add branches
+        for (int i = 0; i < dna.stickCount; i++)
+        {
+            GameObject newStick = Instantiate(stickPrefab);
+            newStick.transform.parent = transform;
+        }
     }
 }
 
