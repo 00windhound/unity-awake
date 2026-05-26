@@ -190,7 +190,16 @@ public class plants : livingThing
         {
             GameObject newStick = Instantiate(stickPrefab);
             newStick.transform.parent = transform;
+            
+            float newStickY = Random.Range(dna.stickLowestY, 1f);
+
+            newStick.transform.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
         }
+
+
+        //change color
+        plantRenderer.material.color = dna.stemColor;
+        // branch color here
     }
 }
 

@@ -30,7 +30,8 @@ public class plantDNA
     public float stickLength = 0;
     //length distribution? longer, shorter near top, bottom?
     public float stickThickness = 0;
-    public float stickLowestY = 0;
+    public float stickLowestY = 0.1f;
+    public UnityEngine.Color stickColor = UnityEngine.Color.green;
     //stick
 
 
