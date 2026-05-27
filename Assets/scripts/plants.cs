@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -18,6 +19,7 @@ public class plants : livingThing
     public MeshFilter trunkMeshFilter;
     public plantDNA dna;
     public float growth = 0.01f;
+    public List<Stick> sticks = new List<Stick>();
 
     
     
@@ -113,13 +115,19 @@ public class plants : livingThing
     {
         float xz = growth;
         float y = growth;
-
         if (growth > dna.maxHeight) y = dna.maxHeight; 
         if (growth > dna.maxThickness) xz = dna.maxThickness;
-      
         trunk.localScale = new UnityEngine.Vector3(xz, y, xz);
         trunk.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
+        
         // change branches here
+         foreach (Stick s in sticks)
+        {
+            s.transform.localScale = new UnityEngine.Vector3(dna.stickThickness, dna.stickLength, dna.stickThickness);
+            s.transform.localPosition = new UnityEngine.Vector3(0f, s.heightPercent * y, 0f);
+            s.transform.localRotation = UnityEngine.Quaternion.Euler(s.outwardAngle, s.angleAround, 0f);
+        }
+
     }
 
 
@@ -188,18 +196,32 @@ public class plants : livingThing
         // add branches
         for (int i = 0; i < dna.stickCount; i++)
         {
-            GameObject newStick = Instantiate(stickPrefab);
-            newStick.transform.parent = transform;
-            
-            float newStickY = Random.Range(dna.stickLowestY, 1f);
+            GameObject stickObj = Instantiate(stickPrefab);
+            stickObj.transform.SetParent(transform,false);
+            Stick stickData = new Stick();
+            stickData.gameObject = stickObj;
 
-            newStick.transform.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
+            stickData.heightPercent= Random.Range(dna.stickLowestY, 1f );
+            stickData.angleAround = Random.Range(0f, 360f);
+            stickData.outwardAngle = Random.Range(20f, 70f);
+
+            sticks.Add(stickData);
         }
 
 
         //change color
         plantRenderer.material.color = dna.stemColor;
         // branch color here
+    }
+
+    [System.Serializable]
+    public class Stick
+    {
+        public GameObject gameObject;
+        public float heightPercent;
+        public float angleAround;
+        public float outwardAngle;
+
     }
 }
 

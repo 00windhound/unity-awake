@@ -138,7 +138,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   trunk: {fileID: 5648097031643122698}
-  stickPrefab: {fileID: 919132149155446097, guid: 43b18120a1780274087a2f5f16184f1a, type: 3}
+  stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
   plantRenderer: {fileID: 0}
   trunkMeshFilter: {fileID: 5133131842559267640}
   dna:
@@ -156,6 +156,7 @@ MonoBehaviour:
     stickLength: 0
     stickThickness: 0
     stickLowestY: 0
+    stickColor: {r: 0, g: 1, b: 0, a: 1}
     freaquency: 130
     maxAge: 6000
   growth: 0.1
