@@ -153,13 +153,15 @@ MonoBehaviour:
     nutritionToxin: 0
     nutritionSugar: 0
     stickCount: 0
-    stickLength: 0
-    stickThickness: 0
-    stickLowestY: 0
+    stickLength: 1
+    stickThickness: 1
+    stickLowestY: 0.1
+    stickDownwardAngle: 45
     stickColor: {r: 0, g: 1, b: 0, a: 1}
     freaquency: 130
     maxAge: 6000
   growth: 0.1
+  sticks: []
 --- !u!135 &4105183221894578612
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -113,6 +113,7 @@ public class plants : livingThing
 
     public void Resize()
     {
+        // resizing trunk
         float xz = growth;
         float y = growth;
         if (growth > dna.maxHeight) y = dna.maxHeight; 
@@ -120,12 +121,14 @@ public class plants : livingThing
         trunk.localScale = new UnityEngine.Vector3(xz, y, xz);
         trunk.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
         
-        // change branches here
+        // resizing sticks
          foreach (Stick s in sticks)
         {
-            s.transform.localScale = new UnityEngine.Vector3(dna.stickThickness, dna.stickLength, dna.stickThickness);
-            s.transform.localPosition = new UnityEngine.Vector3(0f, s.heightPercent * y, 0f);
-            s.transform.localRotation = UnityEngine.Quaternion.Euler(s.outwardAngle, s.angleAround, 0f);
+            s.gameObject.transform.localScale = new UnityEngine.Vector3(dna.stickThickness * growth, dna.stickLength * growth, dna.stickThickness * growth);
+            s.gameObject.transform.localPosition = new UnityEngine.Vector3(0f, s.heightPercent * y, 0f);
+            UnityEngine.Quaternion rotateAround = UnityEngine.Quaternion.Euler(0f, s.angleAround, 0f);
+            UnityEngine.Quaternion tilt = UnityEngine.Quaternion.Euler(-dna.stickDownwardAngle, 0f, 0f);
+            s.gameObject.transform.localRotation = rotateAround * tilt;
         }
 
     }
@@ -203,7 +206,7 @@ public class plants : livingThing
 
             stickData.heightPercent= Random.Range(dna.stickLowestY, 1f );
             stickData.angleAround = Random.Range(0f, 360f);
-            stickData.outwardAngle = Random.Range(20f, 70f);
+            //stickData.outwardAngle = Random.Range(20f, 70f);
 
             sticks.Add(stickData);
         }
@@ -220,7 +223,7 @@ public class plants : livingThing
         public GameObject gameObject;
         public float heightPercent;
         public float angleAround;
-        public float outwardAngle;
+        //public float outwardAngle;
 
     }
 }
