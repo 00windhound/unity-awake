@@ -49,7 +49,8 @@ public class spawner : MonoBehaviour
         //UnityEngine.Debug.Log("spawn queue count: " + spawnQueue.Count);
         if (spawnQueue.Count > 0)// if not too old
         {
-            for (int i = 0; i < plantsPerFrame && spawnQueue.Count > 0; i++)
+            int i = 0;
+            while (i <= plantsPerFrame && spawnQueue.Count > 0)
             {
             
                 PlantSpawnRequest request = spawnQueue.Dequeue();
@@ -116,6 +117,7 @@ public class spawner : MonoBehaviour
                         break;
                 }
                 baby.GetComponent<plants>().dna = babyDna;
+                i++;
             }
         }
     }
