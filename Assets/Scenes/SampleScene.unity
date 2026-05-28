@@ -235,7 +235,6 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
-    serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
@@ -490,7 +489,7 @@ MonoBehaviour:
   ascendMultiplier: 2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 88
 --- !u!54 &593046340
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1005,14 +1004,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3889791883954668092, guid: 4bcf46d9aac7bd44f857dbc988b8e3c6, type: 3}
       propertyPath: dna.stickCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3889791883954668092, guid: 4bcf46d9aac7bd44f857dbc988b8e3c6, type: 3}
       propertyPath: dna.stickLength
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3889791883954668092, guid: 4bcf46d9aac7bd44f857dbc988b8e3c6, type: 3}
-      propertyPath: dna.stickThickness
+    - target: {fileID: 4105183221894578612, guid: 4bcf46d9aac7bd44f857dbc988b8e3c6, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6448201561704001841, guid: 4bcf46d9aac7bd44f857dbc988b8e3c6, type: 3}

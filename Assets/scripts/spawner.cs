@@ -12,7 +12,7 @@ public class spawner : MonoBehaviour
     public GameObject plantPrefab;
     public GameObject animalPrefab;
 
-    public int plantsPerFrame = 25;
+    public int plantsPerFrame = 5;
 
     Queue<PlantSpawnRequest> spawnQueue =
         new Queue<PlantSpawnRequest>();

@@ -13,6 +13,7 @@ public class plants : livingThing
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
     public Transform trunk;
+    public SphereCollider collision;
     public GameObject stickPrefab;
     //public Transform sticks;
     public Renderer plantRenderer;
@@ -28,6 +29,7 @@ public class plants : livingThing
     {
         base.Start();
         plantRenderer = GetComponentInChildren<Renderer>();
+        collision = GetComponent<SphereCollider>();
         applyDna();
         Resize();
         age = 0;
@@ -98,6 +100,7 @@ public class plants : livingThing
             }
         }
 
+        // old age
         if (age > dna.maxAge)
         {
             // old age filter
@@ -113,6 +116,10 @@ public class plants : livingThing
 
     public void Resize()
     {
+        // resize collider
+        collision.radius = growth;
+        collision.center = new UnityEngine.Vector3(0f, collision.radius, 0f);
+
         // resizing trunk
         float xz = growth;
         float y = growth;
@@ -143,7 +150,7 @@ public class plants : livingThing
             ~0
         );
         int count = hits.Length;
-        return count > 4;
+        return count > 2;
     }
 
 
