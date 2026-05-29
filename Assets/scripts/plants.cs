@@ -93,7 +93,7 @@ public class plants : livingThing
                 float plantSize = dna.maxHeight + dna.maxThickness;
                 if (age > plantSize * 100)
                 {
-                    // old age filter
+                    // old age color
                     var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
                     plantRenderer.material.color = oldColor;
                     old += 0.1f;
