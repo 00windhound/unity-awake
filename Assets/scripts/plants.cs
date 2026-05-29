@@ -22,6 +22,7 @@ public class plants : livingThing
     public float growth = 0.01f;
     public List<Stick> sticks = new List<Stick>();
     float checkTime;
+    float old = 0f;
     
     
 
@@ -57,17 +58,6 @@ public class plants : livingThing
             checkTime = Time.time + 1f;
             if (age % 1 ==0)
             {
-                if (crowded())
-                {
-                    growth -= 0.01f;
-                    Resize(); // Shrink plant by 1%
-                    if (growth < 0.01f)
-                    {
-                        global.Instance.returnPlantId(id);
-                        Destroy(gameObject); // destroy small plant
-                    }
-                }
-            
                 bool seeground = false;
                 bool isupright = true;
                 RaycastHit hit;// if on the ground
@@ -104,12 +94,13 @@ public class plants : livingThing
                 if (age > plantSize * 100)
                 {
                     // old age filter
-                    growth -= 0.01f;
-                    Resize(); // Shrink plant by 1%
-                    if (growth < 0.01f)
+                    var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
+                    plantRenderer.material.color = oldColor;
+                    old += 0.1f;
+                    if (old > .8f)
                     {
                         global.Instance.returnPlantId(id);
-                        Destroy(gameObject); // Destroy old plant
+                        Destroy(gameObject); // kill old plant
                     }
                 }
             }
@@ -167,7 +158,7 @@ public class plants : livingThing
 
     public void applyDna()
     {
-        // apply base color
+        // apply trunk color
         plantRenderer.material.color = dna.stemColor;
         
         
