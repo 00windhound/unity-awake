@@ -21,18 +21,20 @@ public class plants : livingThing
     public plantDNA dna;
     public float growth = 0.01f;
     public List<Stick> sticks = new List<Stick>();
-
+    float checkTime;
     
     
 
     protected override void Start()
     {
         base.Start();
+        checkTime = Time.time + Random.Range(0f, 5f);
         plantRenderer = GetComponentInChildren<Renderer>();
         collision = GetComponent<SphereCollider>();
         applyDna();
         Resize();
         age = 0;
+        // start age timer
         // calculate max age based on size
         if(crowded())
         {
@@ -47,69 +49,78 @@ public class plants : livingThing
         }
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        
-        
-        
-        if (age % 10 == 0)
+    public void Update()
+    {        
+        if (Time.time >= checkTime)
         {
-            bool seeground = false;
-            bool isupright = true;
-            RaycastHit hit;// if on the ground
-            if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
+            age +=1;
+            checkTime = Time.time + 1f;
+            if (age % 1 ==0)
             {
-                seeground = true;
-            }
-
-            float upright = UnityEngine.Vector3.Dot(transform.up, UnityEngine.Vector3.up);
-            if (upright < 0.5f)
-            {
-                isupright = false;
-            }
-
-
-            if (!seeground || !isupright)
-            {
-                growth -= 0.01f;
-                Resize(); // Shrink plant by 1%
-                if (growth < 0.01f)
+                if (crowded())
                 {
-                    global.Instance.returnPlantId(id);
-                    Destroy(gameObject); // destroy small plant
-                } 
-            }
+                    growth -= 0.01f;
+                    Resize(); // Shrink plant by 1%
+                    if (growth < 0.01f)
+                    {
+                        global.Instance.returnPlantId(id);
+                        Destroy(gameObject); // destroy small plant
+                    }
+                }
             
-            else if (growth < dna.maxHeight || growth < dna.maxThickness)
-            {
-                if (!crowded())
+                bool seeground = false;
+                bool isupright = true;
+                RaycastHit hit;// if on the ground
+                if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
                 {
-                    growth += 0.01f;
-                    Resize(); // Grow plant
+                    seeground = true;
+                }
+                float upright = UnityEngine.Vector3.Dot(transform.up, UnityEngine.Vector3.up);
+                if (upright < 0.5f)
+                {
+                    isupright = false;
+                }
+                if (!seeground || !isupright)
+                {
+                    growth -= 0.01f;
+                    Resize(); // Shrink plant by 1%
+                    if (growth < 0.01f)
+                    {
+                        global.Instance.returnPlantId(id);
+                        Destroy(gameObject); // destroy small plant
+                    } 
+                }
+                else if (growth < dna.maxHeight || growth < dna.maxThickness)
+                {
+                    if (!crowded())
+                    {
+                        growth += 0.01f;
+                        Resize(); // Grow plant
+                    }
+                }
+
+                // old age
+                float plantSize = dna.maxHeight + dna.maxThickness;
+                if (age > plantSize * 100)
+                {
+                    // old age filter
+                    growth -= 0.01f;
+                    Resize(); // Shrink plant by 1%
+                    if (growth < 0.01f)
+                    {
+                        global.Instance.returnPlantId(id);
+                        Destroy(gameObject); // Destroy old plant
+                    }
                 }
             }
-        }
-        // breading
-        if (dna.freaquency > 0 && age % dna.freaquency == 0 && !crowded())
-        { 
-            if (growth > dna.maxHeight * 0.8f)
-            {
-                UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
-                spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
-            }
-        }
-
-        // old age
-        if (age > dna.maxAge)
-        {
-            // old age filter
-            growth -= 0.01f;
-            Resize(); // Shrink plant by 1%
-            if (growth < 0.01f)
-            {
-                global.Instance.returnPlantId(id);
-                Destroy(gameObject); // Destroy old plant
+            //breeding
+            if (age % dna.breedingFrequency == 0 && !crowded())
+            {  
+                if (growth > dna.maxHeight * 0.8f)
+                {
+                    UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
+                    spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
+                }
             }
         }
     }

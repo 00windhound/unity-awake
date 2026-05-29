@@ -16,9 +16,6 @@ public class livingThing : MonoBehaviour
         id = global.Instance.newPlantId();
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-       age++;
-    }
+
+    //protected virtual void Update(){age++;}
 }

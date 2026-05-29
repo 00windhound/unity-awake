@@ -47,10 +47,10 @@ public class plantDNA
 
         
     // breeding
-    public int freaquency = 130;
+    public int breedingFrequency = 5;
     //breeding
     //behavior
-    public int maxAge = 6000;
+    //public int maxAge = 6000;
     //behavior
 
     public plantDNA Clone()

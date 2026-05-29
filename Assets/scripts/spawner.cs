@@ -108,10 +108,10 @@ public class spawner : MonoBehaviour
                         babyDna.stickDownwardAngle = Mathf.Clamp(babyDna.stickDownwardAngle + Random.Range(-5f, 6f), 10f, 90f);
                         break;
                     case 13://breeding frequency
-                        babyDna.freaquency = Mathf.Clamp(babyDna.freaquency + Random.Range(-10, 11), 50, 300);
+                        babyDna.breedingFrequency = Mathf.Clamp(babyDna.breedingFrequency + Random.Range(-1, 1), 1, 100);
                         break;
                     case 14://max age
-                        babyDna.maxAge = Mathf.Clamp(babyDna.maxAge + Random.Range(-500, 501), 2000, 10000);
+                        //babyDna.maxAge = Mathf.Clamp(babyDna.maxAge + Random.Range(-500, 501), 2, 10000);
                         break;
                     default:
                         break;
