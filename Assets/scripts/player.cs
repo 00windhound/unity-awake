@@ -28,6 +28,10 @@ public class player : MonoBehaviour
     private float playerHeight;
     private float raycastDistance;
 
+    //carry objects
+    public Transform carryPoint;
+    interactable carriedObject;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -59,7 +63,6 @@ public class player : MonoBehaviour
         {
             Jump();
         }
-
         // Checking when we're on the ground and keeping track of our ground check delay
         if (!isGrounded && groundCheckTimer <= 0f)
         {
@@ -71,6 +74,18 @@ public class player : MonoBehaviour
             groundCheckTimer -= Time.deltaTime;
         }
         
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (carriedObject == null)
+            {
+                // try to pick up
+                pickup();
+            }
+            else
+            {
+                drop();
+            }
+        }
     }
 
     void FixedUpdate()
@@ -128,5 +143,33 @@ public class player : MonoBehaviour
         }
     }
 
+
+    void pickup()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 3f))
+        {
+            interactable interactableObject = hit.collider.GetComponent<interactable>();
+            if (interactableObject != null && interactableObject.canCarry)
+            {
+                carriedObject = interactableObject;
+                carriedObject.pickup();
+                carriedObject.transform.SetParent(carryPoint);
+                carriedObject.transform.localPosition = Vector3.zero;
+                carriedObject.transform.localRotation = Quaternion.identity;
+            }
+        }
+    }
+
+
+    void drop()
+    {
+        if (carriedObject != null)
+        {
+            carriedObject.transform.SetParent(null);
+            carriedObject.drop();
+            carriedObject = null;
+        }
+    }
 }
 
