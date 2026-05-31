@@ -76,16 +76,11 @@ public class player : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (carriedObject == null)
-            {
-                // try to pick up
-                pickup();
-            }
-            else
-            {
-                drop();
-            }
+            if (carriedObject == null){pickup();}
+            else{drop();}
         }
+
+        //debug.DrawRay();
     }
 
     void FixedUpdate()
@@ -156,7 +151,7 @@ public class player : MonoBehaviour
                 carriedObject.pickup();
                 carriedObject.transform.SetParent(carryPoint);
                 carriedObject.transform.localPosition = Vector3.zero;
-                carriedObject.transform.localRotation = Quaternion.identity;
+                //carriedObject.transform.localRotation = Quaternion.identity;
             }
         }
     }

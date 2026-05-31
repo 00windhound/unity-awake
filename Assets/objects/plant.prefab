@@ -92,8 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6448201561704001841}
-  - component: {fileID: 3889791883954668092}
+  - component: {fileID: -3605962975413458844}
   - component: {fileID: 4105183221894578612}
+  - component: {fileID: 3889791883954668092}
+  - component: {fileID: -375679957073344344}
   m_Layer: 6
   m_Name: plant
   m_TagString: Untagged
@@ -117,51 +119,33 @@ Transform:
   - {fileID: 5648097031643122698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3889791883954668092
-MonoBehaviour:
+--- !u!54 &-3605962975413458844
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7911627821048108545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54766fabe5afaff4caea2968aff0ae7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  age: 0
-  groundLayer:
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 8
-  plantLayer:
+    m_Bits: 0
+  m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
-  trunk: {fileID: 5648097031643122698}
-  stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
-  plantRenderer: {fileID: 0}
-  trunkMeshFilter: {fileID: 5133131842559267640}
-  dna:
-    stemColor: {r: 0, g: 1, b: 0, a: 1}
-    trunkSegment4Width: 1
-    trunkSegment3Width: 1
-    trunkSegment2Width: 1
-    trunkSegment1Width: 1
-    maxHeight: 0.3
-    maxThickness: 0.3
-    nutritionProtein: 0
-    nutritionToxin: 0
-    nutritionSugar: 0
-    stickCount: 0
-    stickLength: 1
-    stickThickness: 1
-    stickLowestY: 0.1
-    stickDownwardAngle: 45
-    stickColor: {r: 0, g: 1, b: 0, a: 1}
-    freaquency: 130
-    maxAge: 6000
-  growth: 0.1
-  sticks: []
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!135 &4105183221894578612
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -183,3 +167,62 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.91138136
   m_Center: {x: 0, y: 0.41138136, z: 0}
+--- !u!114 &3889791883954668092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911627821048108545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54766fabe5afaff4caea2968aff0ae7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  age: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  plantLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  trunk: {fileID: 5648097031643122698}
+  collision: {fileID: 0}
+  stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
+  plantRenderer: {fileID: 0}
+  trunkMeshFilter: {fileID: 5133131842559267640}
+  dna:
+    stemColor: {r: 0, g: 1, b: 0, a: 1}
+    trunkSegment4Width: 1
+    trunkSegment3Width: 1
+    trunkSegment2Width: 1
+    trunkSegment1Width: 1
+    maxHeight: 0.3
+    maxThickness: 0.3
+    nutritionProtein: 0
+    nutritionToxin: 0
+    nutritionSugar: 0
+    stickCount: 0
+    stickLength: 1
+    stickThickness: 1
+    stickLowestY: 0.1
+    stickDownwardAngle: 45
+    stickColor: {r: 0, g: 1, b: 0, a: 1}
+    breedingFrequency: 5
+  growth: 0.1
+  sticks: []
+--- !u!114 &-375679957073344344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911627821048108545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e05b2de3e0749647b48c55c1b45cf84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canCarry: 1
+  weight: 1

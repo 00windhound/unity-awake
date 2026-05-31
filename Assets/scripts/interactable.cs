@@ -45,10 +45,10 @@ public class interactable : MonoBehaviour
         if (rb != null)
         {
             //enable physics when dropped
-            rb.isKinematic = originalKinematic; 
-            rb.useGravity = originalGravity;
+            rb.isKinematic = false; 
+            rb.useGravity = true;
             rb.AddForce(transform.forward * weight, ForceMode.Impulse); // add force when dropped
         }
-        // if plant layer change to normal plant physics
+        
     }
 }

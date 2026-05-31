@@ -21,8 +21,12 @@ public class plants : livingThing
     public plantDNA dna;
     public float growth = 0.01f;
     public List<Stick> sticks = new List<Stick>();
+    bool seeground = false;
+    bool isupright = true;
     float checkTime;
     float old = 0f;
+    float sick = 0f;
+     Rigidbody rb;
     
     
 
@@ -58,8 +62,6 @@ public class plants : livingThing
             checkTime = Time.time + 1f;
             if (age % 1 ==0)
             {
-                bool seeground = false;
-                bool isupright = true;
                 RaycastHit hit;// if on the ground
                 if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
                 {
@@ -72,16 +74,24 @@ public class plants : livingThing
                 }
                 if (!seeground || !isupright)
                 {
-                    growth -= 0.01f;
-                    Resize(); // Shrink plant by 1%
-                    if (growth < 0.01f)
+                    // change color not shrink.
+                    var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
+                    plantRenderer.material.color = sickColor;
+                    sick += 0.1f;
+                    if (sick > .8f)
                     {
                         global.Instance.returnPlantId(id);
-                        Destroy(gameObject); // destroy small plant
+                        Destroy(gameObject); // kill sick plant
                     } 
                 }
                 else if (growth < dna.maxHeight || growth < dna.maxThickness)
                 {
+                    if (sick > 0f)
+                    {
+                        sick -= 0.1f; // recover if not sick anymore
+                        var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
+                        plantRenderer.material.color = recoverColor;
+                    };
                     if (!crowded())
                     {
                         growth += 0.01f;
@@ -107,6 +117,13 @@ public class plants : livingThing
             //breeding
             if (age % dna.breedingFrequency == 0 && !crowded())
             {  
+                // make kinematic
+                if(rb != null && !rb.isKinematic && seeground && isupright)
+                {
+                    rb = GetComponent<Rigidbody>();
+                    rb.isKinematic = true;
+                    rb.useGravity = false;
+                }
                 if (growth > dna.maxHeight * 0.8f)
                 {
                     UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
