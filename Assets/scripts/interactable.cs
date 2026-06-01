@@ -50,17 +50,26 @@ public class interactable : MonoBehaviour
 
     public void drop()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 200f, LayerMask.GetMask("Ground")))
+        {
+            Debug.Log("HIT: " + hit.collider.name + " at " + hit.point);
+        }
+        else
+        {
+            Debug.Log("NO HIT");
+        };
         if(GetComponent<plants>() != null)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 200f, LayerMask.GetMask("Ground")))
+            //RaycastHit hit;
+            /*if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 200f, LayerMask.GetMask("Ground")))
             {
                 transform.position = hit.point + Vector3.up * 0.5f; // snap to ground
             }
             {
                 transform.position = hit.point;// + Vector3.up * 0.5f; 
             }
-            rb.isKinematic = true; 
+            rb.isKinematic = true; */
             rb.useGravity = false;
         }
         else if (rb != null)
