@@ -26,7 +26,7 @@ public class plants : livingThing
     float checkTime;
     float old = 0f;
     float sick = 0f;
-     Rigidbody rb;
+    Rigidbody rb;
     
     
 
