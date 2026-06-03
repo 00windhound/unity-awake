@@ -5,7 +5,6 @@ using UnityEngine;
 public class interactable : MonoBehaviour
 {
     public bool canCarry = true;
-    //bool isCarried = false;// do i need this?
     bool originalGravity;
     bool originalKinematic;
     Rigidbody rb;
@@ -26,14 +25,9 @@ public class interactable : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        //Debug.DrawRay(transform.position + Vector3.up * 5f, Vector3.down * 20f, Color.green, 2f);
-        Debug.DrawRay(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down * 200f, Color.red, 200f);
-    }
     
 
-    public void pickup(Collider carrierCollider)
+    public void Pickup(Collider carrierCollider)
     {
         //isCarried = true;
         if (rb != null && canCarry)
@@ -47,42 +41,38 @@ public class interactable : MonoBehaviour
         }
     }
 
-    public void drop(Collider carrierCollider)
+    public void Drop(Collider carrierCollider)
     {
-        //Debug.Log("Plant position: " + transform.position);
-        //Debug.Log("Terrain height: " + Terrain.activeTerrain.SampleHeight(transform.position));
-        //Debug.Log("Ground layer: " + LayerMask.GetMask("Ground"));
-        //Debug.DrawRay(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, Color.red, 200f);
         int groundMask = LayerMask.GetMask("ground");
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up * 5f, Vector3.down, out hit, 100f, groundMask))
         {
-            Debug.Log("HIT: " + hit.collider.name);
-            transform.position = hit.point;
-            if(GetComponent<plants>() == null)
+            // hit the ground
+            if(GetComponent<plants>() != null)
             {
+                transform.position = hit.point;
+                rb.isKinematic = true;
                 rb.useGravity = true;
             }
-            
+            else
+            {
+                float offset = objectCollider.bounds.extents.y;
+                transform.position = hit.point + Vector3.up * offset;
+                rb.isKinematic = false;
+                rb.useGravity = true;
+            }
         }
         else
         {
-            Debug.Log("NO HIT");
-            // just throw it
+            Debug.Log("NO HIT");// just throw it
             rb.isKinematic = false; 
             rb.useGravity = true;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             rb.AddForce(transform.forward * weight, ForceMode.Impulse); // add force when dropped
         };
+
         Physics.IgnoreCollision(objectCollider, carrierCollider, false);
-
-
-
-
-
-
-        
         
     }
 }

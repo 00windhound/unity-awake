@@ -76,8 +76,8 @@ public class player : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (carriedObject == null){pickup();}
-            else{drop();}
+            if (carriedObject == null){PickupObject();}
+            else{DropObject();}
         }
 
         //debug.DrawRay();
@@ -139,7 +139,7 @@ public class player : MonoBehaviour
     }
 
 
-    void pickup()
+    void PickupObject()
     {
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 3f))
@@ -148,7 +148,7 @@ public class player : MonoBehaviour
             if (interactableObject != null && interactableObject.canCarry)
             {
                 carriedObject = interactableObject;
-                carriedObject.pickup(GetComponent<Collider>());
+                carriedObject.Pickup(GetComponent<Collider>());
                 carriedObject.transform.SetParent(carryPoint);
                 carriedObject.transform.localPosition = Vector3.zero;
             }
@@ -156,12 +156,12 @@ public class player : MonoBehaviour
     }
 
 
-    void drop()
+    void DropObject()
     {
         if (carriedObject != null)
         {
             carriedObject.transform.SetParent(null);
-            carriedObject.drop(GetComponent<Collider>());
+            carriedObject.Drop(GetComponent<Collider>());
             carriedObject = null;
         }
     }
