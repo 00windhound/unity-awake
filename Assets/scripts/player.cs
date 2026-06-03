@@ -148,10 +148,9 @@ public class player : MonoBehaviour
             if (interactableObject != null && interactableObject.canCarry)
             {
                 carriedObject = interactableObject;
-                carriedObject.pickup();
+                carriedObject.pickup(GetComponent<Collider>());
                 carriedObject.transform.SetParent(carryPoint);
                 carriedObject.transform.localPosition = Vector3.zero;
-                //carriedObject.transform.localRotation = Quaternion.identity;
             }
         }
     }
@@ -162,7 +161,7 @@ public class player : MonoBehaviour
         if (carriedObject != null)
         {
             carriedObject.transform.SetParent(null);
-            carriedObject.drop();
+            carriedObject.drop(GetComponent<Collider>());
             carriedObject = null;
         }
     }
