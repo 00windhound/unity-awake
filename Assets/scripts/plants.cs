@@ -116,8 +116,7 @@ public class plants : livingThing
             }
             //breeding
             if (age % dna.breedingFrequency == 0 && !crowded())
-            {  
-                // make kinematic
+            {  // make kinematic
                 if(rb != null && !rb.isKinematic && seeground && isupright)
                 {
                     rb = GetComponent<Rigidbody>();

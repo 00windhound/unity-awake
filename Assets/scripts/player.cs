@@ -80,7 +80,8 @@ public class player : MonoBehaviour
             else{DropObject();}
         }
 
-        //debug.DrawRay();
+        bool bulldozing = Input.GetKeyDown(KeyCode.LeftShift);
+        // if buldozing uproot any plants i touch
     }
 
     void FixedUpdate()
@@ -153,7 +154,7 @@ public class player : MonoBehaviour
                 carriedObject.transform.localPosition = Vector3.zero;
             }
         }
-    }
+    }    
 
 
     void DropObject()
