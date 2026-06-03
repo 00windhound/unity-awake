@@ -22,12 +22,13 @@ public class plants : livingThing
     public MeshFilter trunkMeshFilter;
     public plantDNA dna;
     public float growth = 0.01f;
+    public float maxAge = 100f;
     public List<Stick> sticks = new List<Stick>();
     bool seeground = false;
     bool isupright = true;
     float checkTime;
     float old = 0f;
-    float sick = 0f;
+    public float sick = 0f;
     Rigidbody rb;
     
     
@@ -42,6 +43,8 @@ public class plants : livingThing
         applyDna();
         Resize();
         age = 0;
+        float plantSize = dna.maxHeight + dna.maxThickness;
+        maxAge = plantSize * 100f;
         // start age timer
         // calculate max age based on size
         if(crowded())
@@ -62,7 +65,7 @@ public class plants : livingThing
         if (Time.time >= checkTime)
         {
             age +=1;
-            checkTime = Time.time + 1f;
+            checkTime = Time.time + 5f;
             if (age % 1 ==0)
             {
                 RaycastHit hit;// if on the ground
@@ -87,24 +90,27 @@ public class plants : livingThing
                         Destroy(gameObject); // kill sick plant
                     } 
                 }
-                else if (growth < dna.maxHeight || growth < dna.maxThickness)
+                else 
                 {
+                    if (growth < dna.maxHeight || growth < dna.maxThickness)
+                    {
+                        if (!crowded())
+                        {
+                            growth += 0.01f;
+                            Resize(); // Grow plant
+                        }
+                    }
                     if (sick > 0f)
                     {
                         sick -= 0.1f; // recover if not sick anymore
                         var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
                         plantRenderer.material.color = recoverColor;
                     };
-                    if (!crowded())
-                    {
-                        growth += 0.01f;
-                        Resize(); // Grow plant
-                    }
+                    
                 }
 
                 // old age
-                float plantSize = dna.maxHeight + dna.maxThickness;
-                if (age > plantSize * 100)
+                if (age > maxAge)
                 {
                     // old age color
                     var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
@@ -119,9 +125,9 @@ public class plants : livingThing
             }
             //breeding
             if (age % dna.breedingFrequency == 0 && !crowded())
-            {  // make kinematic
+            {  
                 if(rb != null && !rb.isKinematic && seeground && isupright)
-                {
+                { // root itself
                     rb = GetComponent<Rigidbody>();
                     rb.isKinematic = true;
                     rb.useGravity = false;

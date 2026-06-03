@@ -31,6 +31,7 @@ public class player : MonoBehaviour
     //carry objects
     public Transform carryPoint;
     interactable carriedObject;
+    bool bulldozing = false;
 
     void Start()
     {
@@ -50,7 +51,7 @@ public class player : MonoBehaviour
     
     void Update()
     {// build toggle character mode
-        
+        //    Debug.Log("bulldozing: " + bulldozing);
         moveHorizontal = Input.GetAxis("Horizontal");
         moveForward = Input.GetAxis("Vertical");
 
@@ -80,7 +81,8 @@ public class player : MonoBehaviour
             else{DropObject();}
         }
 
-        bool bulldozing = Input.GetKeyDown(KeyCode.LeftShift);
+        bulldozing = Input.GetKey(KeyCode.LeftShift);
+        //Debug.Log("bulldozing: " + bulldozing);
         // if buldozing uproot any plants i touch
     }
 
@@ -169,9 +171,17 @@ public class player : MonoBehaviour
 
 
 
-    void onCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         Debug.Log("hit: " + collision.gameObject.name);
+        if (bulldozing)
+        {
+            interactable interactableItem = collision.gameObject.GetComponent<interactable>();
+            if (interactableItem != null)
+            {
+                interactableItem.bulldoze();
+            }
+        }
         // call colision in objects interactable if it has it
         /*
         if (collision.gameObject.layer ==

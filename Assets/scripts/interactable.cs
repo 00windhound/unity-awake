@@ -5,6 +5,7 @@ using UnityEngine;
 public class interactable : MonoBehaviour
 {
     public bool canCarry = true;
+    public bool canBulldoze = true;
     bool originalGravity;
     bool originalKinematic;
     Rigidbody rb;
@@ -74,5 +75,15 @@ public class interactable : MonoBehaviour
 
         Physics.IgnoreCollision(objectCollider, carrierCollider, false);
         
+    }
+
+
+    public void bulldoze()
+    {
+        if (canBulldoze)
+        {
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        }
     }
 }
