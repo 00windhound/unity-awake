@@ -166,5 +166,28 @@ public class player : MonoBehaviour
             carriedObject = null;
         }
     }
-}
 
+
+
+    void onCollisionEnter(Collision collision)
+    {
+        Debug.Log("hit: " + collision.gameObject.name);
+        // call colision in objects interactable if it has it
+        /*
+        if (collision.gameObject.layer ==
+        LayerMask.NameToLayer("Ground"))
+    {
+        return;
+    }
+    if (collision.transform.root == transform.root)
+{
+    return;
+}
+interactable item = collision.gameObject.GetComponent<interactable>();
+if (item != null)
+{item.bulldoze():}
+    */
+
+    }
+
+}

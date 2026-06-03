@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using System.Runtime.CompilerServices;
 
 
 public class plants : livingThing
@@ -13,7 +14,8 @@ public class plants : livingThing
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
     public Transform trunk;
-    public SphereCollider collision;
+    public CapsuleCollider roundCollision;
+    public BoxCollider boxCollision;
     public GameObject stickPrefab;
     //public Transform sticks;
     public Renderer plantRenderer;
@@ -35,7 +37,8 @@ public class plants : livingThing
         base.Start();
         checkTime = Time.time + Random.Range(0f, 5f);
         plantRenderer = GetComponentInChildren<Renderer>();
-        collision = GetComponent<SphereCollider>();
+        roundCollision = GetComponent<CapsuleCollider>();
+        boxCollision = GetComponent<BoxCollider>();
         applyDna();
         Resize();
         age = 0;
@@ -135,8 +138,11 @@ public class plants : livingThing
     public void Resize()
     {
         // resize collider
-        collision.radius = growth;
-        collision.center = new UnityEngine.Vector3(0f, collision.radius, 0f);
+        roundCollision.radius = growth;
+        roundCollision.height = growth * 2f;
+        roundCollision.center = new UnityEngine.Vector3(0f, roundCollision.radius, 0f);
+        boxCollision.size = new UnityEngine.Vector3(growth, growth, growth);
+        boxCollision.center = new UnityEngine.Vector3(0f, growth / 2f, 0f);
 
         // resizing trunk
         float xz = growth;
@@ -168,7 +174,7 @@ public class plants : livingThing
             ~0
         );
         int count = hits.Length;
-        return count > 2;
+        return count > 3;
     }
 
 
