@@ -173,7 +173,6 @@ public class player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("hit: " + collision.gameObject.name);
         if (bulldozing)
         {
             interactable interactableItem = collision.gameObject.GetComponent<interactable>();
@@ -182,22 +181,5 @@ public class player : MonoBehaviour
                 interactableItem.bulldoze();
             }
         }
-        // call colision in objects interactable if it has it
-        /*
-        if (collision.gameObject.layer ==
-        LayerMask.NameToLayer("Ground"))
-    {
-        return;
     }
-    if (collision.transform.root == transform.root)
-{
-    return;
-}
-interactable item = collision.gameObject.GetComponent<interactable>();
-if (item != null)
-{item.bulldoze():}
-    */
-
-    }
-
 }

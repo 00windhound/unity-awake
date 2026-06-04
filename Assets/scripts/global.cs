@@ -10,7 +10,8 @@ public class global : MonoBehaviour
     long animalId = 0;
     List<long> plantIds = new List<long>();
     List<long> animalIds = new List<long>();
-    
+    long totalPlants = 0;
+    long totalAnimals = 0;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class global : MonoBehaviour
 
     public long newPlantId()
     {
+        totalPlants++;
         // check if there are any returned plant ids to reuse
         if (plantIds.Count > 0)
         {
@@ -38,6 +40,7 @@ public class global : MonoBehaviour
 
     public long newAnimalId()
     {
+        totalAnimals++;
         // check if there are any returned animal ids to reuse
         if (animalIds.Count > 0)
         {
@@ -51,12 +54,19 @@ public class global : MonoBehaviour
 
     public void returnPlantId(long id)
     {
-       plantIds.Add(id); 
+        totalPlants--;
+        plantIds.Add(id); 
     }
 
     public void returnAnimalId(long id)
     {
+        totalAnimals--;
         animalIds.Add(id);
+    }
+
+    public void firstButton()
+    {
+        Debug.Log("first button pressed!");
     }
 
 }
