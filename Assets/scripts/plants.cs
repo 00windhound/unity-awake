@@ -40,6 +40,7 @@ public class plants : livingThing
         plantRenderer = GetComponentInChildren<Renderer>();
         roundCollision = GetComponent<CapsuleCollider>();
         boxCollision = GetComponent<BoxCollider>();
+        rb = GetComponent<Rigidbody>();
         applyDna();
         Resize();
         age = 0;
@@ -65,6 +66,7 @@ public class plants : livingThing
         if (Time.time >= checkTime)
         {
             age +=1;
+            long thidss = id;
             checkTime = Time.time + 5f;
             if (age % 1 ==0)
             {
@@ -72,12 +74,11 @@ public class plants : livingThing
                 if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
                 {
                     seeground = true;
+                    float upright = UnityEngine.Vector3.Dot(transform.up, hit.normal);
+                    if (upright < 0.8f){isupright = false;}
+                    else{isupright = true;}
                 }
-                float upright = UnityEngine.Vector3.Dot(transform.up, UnityEngine.Vector3.up);
-                if (upright < 0.5f)
-                {
-                    isupright = false;
-                }
+                else{seeground = false;}
                 if (!seeground || !isupright)
                 {
                     // change color not shrink.
@@ -92,6 +93,11 @@ public class plants : livingThing
                 }
                 else 
                 {
+                    if(rb != null && !rb.isKinematic)
+                    { // root itself
+                        rb.isKinematic = true;
+                        rb.useGravity = false;
+                    }
                     if (growth < dna.maxHeight || growth < dna.maxThickness)
                     {
                         if (!crowded())
@@ -124,19 +130,10 @@ public class plants : livingThing
                 }
             }
             //breeding
-            if (age % dna.breedingFrequency == 0 && !crowded())
-            {  
-                if(rb != null && !rb.isKinematic && seeground && isupright)
-                { // root itself
-                    rb = GetComponent<Rigidbody>();
-                    rb.isKinematic = true;
-                    rb.useGravity = false;
-                }
-                if (growth > dna.maxHeight * 0.8f)
-                {
-                    UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
-                    spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
-                }
+            if (age % dna.breedingFrequency == 0 && !crowded() && growth > dna.maxHeight * 0.8f)
+            {
+                UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
+                spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
             }
         }
     }
