@@ -4,141 +4,83 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
- 
-    
-    // Camera Rotation
-    public float mouseSensitivity = 2f;
-    private float verticalRotation = 0f;
+    public Transform cameraPivot;
     public Transform cameraTransform;
-    
-    // Ground Movement
-    private Rigidbody rb;
-    public float MoveSpeed = 5f;
-    private float moveHorizontal;
-    private float moveForward;
-
-    // Jumping
-    public float jumpForce = 10f;
-    public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
-    public float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
-    private bool isGrounded = true;
-    public LayerMask groundLayer;
-    private float groundCheckTimer = 0f;
-    private float groundCheckDelay = 0.3f;
-    private float playerHeight;
-    private float raycastDistance;
-
-    //carry objects
+    public CharacterController controller;
+    public float moveSpeed = 5f;
+    public float mouseSensitivity = 150; 
+    float yaw;
+    float pitch;
     public Transform carryPoint;
     interactable carriedObject;
     bool bulldozing = false;
+    bool menuOpen = false;
 
+   
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-
-        // Set the raycast to be slightly beneath the player's feet
-        playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
-        raycastDistance = (playerHeight / 2) + 0.2f;
-
-        // Hides the mouse
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
-
 
     
     void Update()
-    {// build toggle character mode
-        //    Debug.Log("bulldozing: " + bulldozing);
-        moveHorizontal = Input.GetAxis("Horizontal");
-        moveForward = Input.GetAxis("Vertical");
-
-        float turn = Input.GetAxis("Horizontal");
-        transform.Rotate(0, turn * 240f * Time.deltaTime, 0);
-
-        RotateCamera();
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+    {
+        /*
+        // movement side pass
+        // getting input
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        // where the camera is pointing
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        // remove up or down direction
+        forward.y = 0;
+        right.y = 0;
+        //making the numbers between 1 and -1 i guess
+        forward.Normalize();
+        right.Normalize();
+        // create move direction
+        Vector3 moveDirection = forward * vertical + right * horizontal;
+        // rotate player to face move direction
+        if (moveDirection.sqrMagnitude > 0.01f)
         {
-            Jump();
+            //rotate player to face move direction
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            // smooth rotation, no snapping
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 8f * Time.deltaTime);
         }
-        // Checking when we're on the ground and keeping track of our ground check delay
-        if (!isGrounded && groundCheckTimer <= 0f)
-        {
-            Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
-            isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, groundLayer);
-        }
-        else
-        {
-            groundCheckTimer -= Time.deltaTime;
-        }
+        //actually move the player
+        controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+        */
+
+        // movement turning with A D
+        float move = Input.GetAxisRaw("Vertical");
+        float turn = Input.GetAxisRaw("Horizontal");
+
+        transform.Rotate(Vector3.up, turn * 120f * Time.deltaTime);
+        controller.Move(transform.forward * move * moveSpeed * Time.deltaTime);
         
+        // free mouse look
+        yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        pitch = Mathf.Clamp(pitch, -30f, 70f);
+        cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+
+
+        cameraPivot.position = transform.position;// needed for both movement versions
+
+
+
+
+
+        // pick up, drop, bulldoze objects
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (carriedObject == null){PickupObject();}
             else{DropObject();}
         }
-
         bulldozing = Input.GetKey(KeyCode.LeftShift);
-        //Debug.Log("bulldozing: " + bulldozing);
-        // if buldozing uproot any plants i touch
-    }
-
-    void FixedUpdate()
-    {
-        MovePlayer();
-        ApplyJumpPhysics();
-    }
-
-    void MovePlayer()
-    {
-
-        Vector3 movement =  transform.forward * moveForward;
-        Vector3 targetVelocity = movement * MoveSpeed;
-
-        // Apply movement to the Rigidbody
-        Vector3 velocity = rb.velocity;
-        velocity.x = targetVelocity.x;
-        velocity.z = targetVelocity.z;
-        rb.velocity = velocity;
-
-        // If we aren't moving and are on the ground, stop velocity so we don't slide
-        if (isGrounded && moveHorizontal == 0 && moveForward == 0)
-        {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
-        }
-    }
-
-    void RotateCamera()
-    {
-
-        verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
-
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-    }
-
-    void Jump()
-    {
-        isGrounded = false;
-        groundCheckTimer = groundCheckDelay;
-        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z); // Initial burst for the jump
-    }
-
-    void ApplyJumpPhysics()
-    {
-        if (rb.velocity.y < 0) 
-        {
-            // Falling: Apply fall multiplier to make descent faster
-            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
-        } // Rising
-        else if (rb.velocity.y > 0)
-        {
-            // Rising: Change multiplier to make player reach peak of jump faster
-            rb.velocity += Vector3.up * Physics.gravity.y * ascendMultiplier  * Time.fixedDeltaTime;
-        }
     }
 
 
@@ -176,10 +118,7 @@ public class player : MonoBehaviour
         if (bulldozing)
         {
             interactable interactableItem = collision.gameObject.GetComponent<interactable>();
-            if (interactableItem != null)
-            {
-                interactableItem.bulldoze();
-            }
+            if (interactableItem != null){interactableItem.bulldoze();}
         }
     }
 }

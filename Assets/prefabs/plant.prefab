@@ -212,9 +212,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   trunk: {fileID: 5648097031643122698}
-  collision: {fileID: 0}
+  roundCollision: {fileID: 3773635872719789855}
+  boxCollision: {fileID: 3684223660291456186}
   stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
-  plantRenderer: {fileID: 0}
+  plantRenderer: {fileID: 203702664424278194}
   trunkMeshFilter: {fileID: 5133131842559267640}
   dna:
     stemColor: {r: 0, g: 1, b: 0, a: 1}
@@ -235,7 +236,9 @@ MonoBehaviour:
     stickColor: {r: 0, g: 1, b: 0, a: 1}
     breedingFrequency: 5
   growth: 0.1
+  maxAge: 100
   sticks: []
+  sick: 0
 --- !u!114 &-375679957073344344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,4 +252,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canCarry: 1
+  canBulldoze: 1
   weight: 1
