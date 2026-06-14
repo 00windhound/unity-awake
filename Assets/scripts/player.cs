@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
+    public Transform playerTransform;
     public Transform cameraPivot;
     public Transform cameraTransform;
     public CharacterController controller;
     public float moveSpeed = 5f;
     public float mouseSensitivity = 150; 
+    public float keyboardTurnSpeed = 100;
     float yaw;
     float pitch;
     public Transform carryPoint;
@@ -20,6 +22,9 @@ public class player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        playerTransform.localScale = new UnityEngine.Vector3(.5f, .5f, .5f);
+        //playerTransform.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
+        
     }
 
     
@@ -52,7 +57,7 @@ public class player : MonoBehaviour
         //actually move the player
         controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
         */
-
+        /*
         // movement turning with A D
         float move = Input.GetAxisRaw("Vertical");
         float turn = Input.GetAxisRaw("Horizontal");
@@ -66,9 +71,18 @@ public class player : MonoBehaviour
 
         pitch = Mathf.Clamp(pitch, -30f, 70f);
         cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        */
+
+        // trying this
+        // it doesn't have move foreward and back or look up or down
+        yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        yaw += Input.GetAxisRaw("Horizontal") * keyboardTurnSpeed * Time.deltaTime;
+        cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
 
 
-        cameraPivot.position = transform.position;// needed for both movement versions
+        // keep the camera with the player
+        cameraPivot.position = transform.position;
 
 
 

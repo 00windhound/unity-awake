@@ -156,9 +156,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3601495d61ddaab459d88699d50630b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 8046597802268362519}
+  cameraPivot: {fileID: 0}
   cameraTransform: {fileID: 0}
   controller: {fileID: 8306764807196964601}
   moveSpeed: 5
+  mouseSensitivity: 150
   carryPoint: {fileID: 6294897510587416308}
 --- !u!114 &2409644566403321939
 MonoBehaviour:
