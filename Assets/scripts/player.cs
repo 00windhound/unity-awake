@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 
 public class player : MonoBehaviour
@@ -17,6 +18,8 @@ public class player : MonoBehaviour
     interactable carriedObject;
     bool bulldozing = false;
     bool menuOpen = false;
+    public float gravity = -20f;
+    float verticalVelocity = 0f;
 
    
     void Start()
@@ -30,11 +33,33 @@ public class player : MonoBehaviour
     
     void Update()
     {
-        /*
-        // movement side pass
         // getting input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        //movement 
+        // styles: minecraft move where camera looks, animal where body faces
+
+
+
+        // if movement can be based on rotation, should rotation come first?
+        // or if movement fallows camera and camera is turned should rotation fallow movement
+
+
+
+        // rotation
+        // either face camera, face movement, turn from A and D
+
+
+
+        // camera
+        // first person, third person fallow behind, free orbit circling player
+
+
+
+
         // where the camera is pointing
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -55,8 +80,9 @@ public class player : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 8f * Time.deltaTime);
         }
         //actually move the player
-        controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-        */
+        //controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+        controller.Move(movement * Time.deltaTime);
+        
         /*
         // movement turning with A D
         float move = Input.GetAxisRaw("Vertical");
@@ -65,21 +91,24 @@ public class player : MonoBehaviour
         transform.Rotate(Vector3.up, turn * 120f * Time.deltaTime);
         controller.Move(transform.forward * move * moveSpeed * Time.deltaTime);
         
+        */
         // free mouse look
         yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         pitch = Mathf.Clamp(pitch, -30f, 70f);
         cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
-        */
+        
 
+
+        /*
         // trying this
         // it doesn't have move foreward and back or look up or down
         yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         yaw += Input.GetAxisRaw("Horizontal") * keyboardTurnSpeed * Time.deltaTime;
         cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
-
+        */
 
         // keep the camera with the player
         cameraPivot.position = transform.position;
