@@ -44,8 +44,8 @@ public class player : MonoBehaviour
         float move = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-        //movement where camera looks, rotation face camera, camera third person
-        // camera doesn't move, side pass, cam position a little weird
+
+        // fix floating in the air
 
         //movement 
 
@@ -67,19 +67,21 @@ public class player : MonoBehaviour
 
 
         // rotation
-        // rotation style: face camera
-        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
 
         /*
+        // rotation style: face camera
+        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+        */
+        
         // rotation style: turn from A and D
         transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
-        */
+        
 
         /*
         // rotation style: face movement
-        if (moveDirection.sqrMagnitude > 0.01f)
+        if (direction.sqrMagnitude > 0.01f)
         {
-            Quaternion target = Quaternion.LookRotation(moveDirection);
+            Quaternion target = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, 8f * Time.deltaTime);
         }
         */
@@ -89,21 +91,23 @@ public class player : MonoBehaviour
 
         /*
         // camera style: first person
-        cameraTransform.localPosition = new Vector3(0f, 0f, 0f);
+        cameraTransform.localPosition = new Vector3(0f, 1.5f, 0f);
         */
 
 
         // camera style: third person follow behind
-        cameraTransform.localPosition = new Vector3(0f, 1.5f, -2f);
+        cameraTransform.localPosition = new Vector3(0f, 1f, -2.5f);
 
         /*
-        // camera style: free orbit circling player
-        cameraTransform.localPosition = new Vector3(0f, 2f, -5f);
-        yaw += inputX * mouseSensitivity * Time.deltaTime;
-        pitch -= inputY * mouseSensitivity * Time.deltaTime;
+        // camera style: free orbit
+        //cameraTransform.localPosition = new Vector3(0f, 2f, -5f);
+        yaw += mouseX * mouseSensitivity * Time.deltaTime;
+        pitch -= mouseY * mouseSensitivity * Time.deltaTime;
         pitch = Mathf.Clamp(pitch, -30f, 70f);
         cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
         */
+
+
 
         // keep the camera with the player
         cameraPivot.position = transform.position + Vector3.up * 1.5f;
