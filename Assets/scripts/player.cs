@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Threading.Tasks.Dataflow;
+
 //using System.Numerics;
 //using System.Threading.Tasks.Dataflow;
 using UnityEngine;
@@ -61,21 +63,21 @@ public class player : MonoBehaviour
 
         /*
         // movement style: move where body faces
-        Vector3 direction = transform.forward * move;// no turn
+        Vector3 direction = transform.forward * move;
         controller.Move(direction * moveSpeed * Time.deltaTime);
         */
 
 
         // rotation
 
-        /*
+        
         // rotation style: face camera
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
-        */
         
+        /*
         // rotation style: turn from A and D
         transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
-        
+        */
 
         /*
         // rotation style: face movement
@@ -98,16 +100,20 @@ public class player : MonoBehaviour
         // camera style: third person follow behind
         cameraTransform.localPosition = new Vector3(0f, 1f, -2.5f);
 
-        /*
+        
         // camera style: free orbit
-        //cameraTransform.localPosition = new Vector3(0f, 2f, -5f);
         yaw += mouseX * mouseSensitivity * Time.deltaTime;
         pitch -= mouseY * mouseSensitivity * Time.deltaTime;
         pitch = Mathf.Clamp(pitch, -30f, 70f);
         cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        
+
+        /*
+        // camera style: fixed
+        pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+        pitch = Mathf.Clamp(pitch, -30f, 70f);
+        cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
         */
-
-
 
         // keep the camera with the player
         cameraPivot.position = transform.position + Vector3.up * 1.5f;

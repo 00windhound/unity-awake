@@ -1,42 +1,92 @@
 debug log
 player movement tests.
-Iv'e separated the player movement, rotation, and camera into chunks and
+Iv'e separated the player movement into chunks and
 devided each chunk into diferent styles. I'm now testing each combonation 
 of chunks to find all the functioning player controll methods.
+the chunks and styles are.. 
+movement: where camera looks, where body faces
+rotation: face camera, A D, face movement
+camera: free orbit, fixed
+
+
 
 combonation 1:
-movement where camera looks, rotation face camera, camera 3rd person
-observations: 
-camera doesn't move, side pass, cam position a little weird.
-changes:
-changed camera setting to free orbit with third person positioning
-observations:
+movement where camera looks, rotate face camera, camera fixed
+observations: bad
+unable to turn or look to the side, A D does a side pass
+
+
+combontion 2: 
+movement where camera looks, rotate face camera, free orbit
+observations: glitchy
 turning is a bit jumpy, free orbit works, movement works, player stays facing camera
 
 
-combonation 2:
-movement where camera looks, rotation A D, 3rd person, free orbit
-observations:
-bad combo. A D causes player location to side pass while spinning, foreward movement while player stays sideways
-
-
 combonation 3:
-movement where camera looks, rotate face movement, 3rd person, free orbit
-good combo. animal faces movement, movement based on where camera looking, A D is camera relative yet player faces those directions which looks good
+movement where camera looks, rotate A D, free orbit
+observations: bad
+A D causes player location to side pass while spinning, foreward movement while player stays sideways
 
 
 combonation 4: 
-movement where camera looks, rotate A D, 3rd person
-bad combo, unable to turn camera, side pass while spinning, movement is right though
+movement where camera looks, rotate A D, camera fixed
+observations: good
+turning and backwards are working, essentially one hand controls 
+
+combonation 5:
+movement where camera looks, rotate face movement, free orbit
+observations: good
+animal faces movement, movement based on where camera looking, A D is camera relative yet player faces those directions which looks good
 
 
+combonation 6:
+movement where camera looks, rotate face movement, camera fixed
+observations: glitchy
+backwards is glitchy, turning sensitivity is bad,
+
+
+combonation 7:
+movement where body faces, rotate face camera, free orbit
+observations: 
+
+
+
+combonation 8:
+movement where body faces, rotate face camera, camera fixed
+observations: 
+
+
+
+combonation 9:
+movement where body faces, rotate A D, free orbit
+observations: 
+
+
+
+
+combonation 10:
+movement where body faces, rotate A D, camera fixed
+observations: 
+
+
+
+combonation 11:
+movement where body faces, rotate face movement, free orbit
+observations: 
+
+
+
+combonation 12:
+movement where body faces, rotate face movement, camera fixed
+observations: 
 
 
 
 
 
 viable combonations:
-combo 1: movement where camera looks, rotation face camera, 3rd person, free orbit
-combo 3: movement where camera looks, rotate face movement, 3rd person, free orbit
+combo 1: movement where camera looks, rotation face camera, free orbit
+combo 4: movement where camera looks, rotate A D, camera fixed
+combo 5: movement where camera looks, rotate face movement, free orbit
 
 
