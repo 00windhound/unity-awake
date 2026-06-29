@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Numerics;
+
 //using System.Threading.Tasks.Dataflow;
 
 //using System.Numerics;
@@ -24,6 +26,7 @@ public class player : MonoBehaviour
     bool menuOpen = false;
     public float gravity = -20f;
     float verticalVelocity = 0f;
+    public int movementStyle = 1;
     //float yaw;// camera left right
     //float pitch;// camera up down
 
@@ -46,143 +49,110 @@ public class player : MonoBehaviour
         float move = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-
-        // fix floating in the air
-
-        //movement 
-
-        //movement style: move where camera looks
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
-        forward.y = 0;
-        right.y = 0;// includes turn
-        forward.Normalize();
-        right.Normalize();
-        Vector3 direction = forward * move + right * turn;//error here
-        controller.Move(direction * moveSpeed * Time.deltaTime);
+        Vector3 direction;
 
-        /*
-        // movement style: move where body faces
-        Vector3 direction = transform.forward * move;
-        controller.Move(direction * moveSpeed * Time.deltaTime);
-        */
-
-
-        // rotation
-
-        
-        // rotation style: face camera
-        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
-        
-        /*
-        // rotation style: turn from A and D
-        transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
-        */
-
-        /*
-        // rotation style: face movement
-        if (direction.sqrMagnitude > 0.01f)
+        // fix floating in the air
+        // button to change movement style
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Quaternion target = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, 8f * Time.deltaTime);
+            movementStyle++;
+            if (movementStyle > 5)
+            {
+                movementStyle = 1;
+            }
         }
-        */
 
 
-        // camera
+        switch (movementStyle)
+        {
+            case 1:// combo 1: movement where camera looks, rotation face camera, free orbit
+                //Vector3 forward = cameraTransform.forward;
+                //Vector3 right = cameraTransform.right;
+                forward.y = 0;
+                right.y = 0;
+                forward.Normalize();
+                right.Normalize();
+                direction = forward * move + right * turn;
+                controller.Move(direction * moveSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+                yaw += mouseX * mouseSensitivity * Time.deltaTime;
+                pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+                pitch = Mathf.Clamp(pitch, -30f, 70f);
+                cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+                break;
 
-        /*
-        // camera style: first person
-        cameraTransform.localPosition = new Vector3(0f, 1.5f, 0f);
-        */
+            case 2:// combo 4: movement where camera looks, rotate A D, camera fixed
+                //Vector3 forward = cameraTransform.forward;
+                //Vector3 right = cameraTransform.right;
+                forward.y = 0;
+                right.y = 0;
+                forward.Normalize();
+                right.Normalize();
+                direction = forward * move + right * turn;//error here
+                controller.Move(direction * moveSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+                pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+                pitch = Mathf.Clamp(pitch, -30f, 70f);
+                cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
+                break;
+
+            case 3:// combo 5: movement where camera looks, rotate face movement, free orbit
+                //Vector3 forward = cameraTransform.forward;
+                //Vector3 right = cameraTransform.right;
+                forward.y = 0;
+                right.y = 0;
+                forward.Normalize();
+                right.Normalize();
+                direction = forward * move + right * turn;//error here
+                controller.Move(direction * moveSpeed * Time.deltaTime);
+                if (direction.sqrMagnitude > 0.01f)
+                {
+                    Quaternion target = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, target, 8f * Time.deltaTime);
+                }
+                yaw += mouseX * mouseSensitivity * Time.deltaTime;
+                pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+                pitch = Mathf.Clamp(pitch, -30f, 70f);
+                cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+                break;
+
+            case 4:// combo 9: movement where body faces, rotate A D, free orbit
+                direction = transform.forward * move;
+                controller.Move(direction * moveSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+                yaw += mouseX * mouseSensitivity * Time.deltaTime;
+                pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+                pitch = Mathf.Clamp(pitch, -30f, 70f);
+                cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+                break;
+
+            case 5:// combo 10: movement where body faces, rotate A D, camera fixed
+                direction = transform.forward * move;
+                controller.Move(direction * moveSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+                pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+                pitch = Mathf.Clamp(pitch, -30f, 70f);
+                cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
+                break;
+        }
 
 
-        // camera style: third person follow behind
-        cameraTransform.localPosition = new Vector3(0f, 1f, -2.5f);
 
-        
-        // camera style: free orbit
-        yaw += mouseX * mouseSensitivity * Time.deltaTime;
-        pitch -= mouseY * mouseSensitivity * Time.deltaTime;
-        pitch = Mathf.Clamp(pitch, -30f, 70f);
-        cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
-        
 
-        /*
-        // camera style: fixed
-        pitch -= mouseY * mouseSensitivity * Time.deltaTime;
-        pitch = Mathf.Clamp(pitch, -30f, 70f);
-        cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
-        */
+
+
+
+
+
+
+
+       
 
         // keep the camera with the player
         cameraPivot.position = transform.position + Vector3.up * 1.5f;
 
-
-
-
-
-
-
-
-
-
-        /*
-        // where the camera is pointing
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
-        // remove up or down direction
-        forward.y = 0;
-        right.y = 0;
-        //making the numbers between 1 and -1 i guess
-        forward.Normalize();
-        right.Normalize();
-        // create move direction
-        Vector3 moveDirection = forward * vertical + right * horizontal;
-        // rotate player to face move direction
-        if (moveDirection.sqrMagnitude > 0.01f)
-        {
-            //rotate player to face move direction
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            // smooth rotation, no snapping
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 8f * Time.deltaTime);
-        }
-        //actually move the player
-        //controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-        controller.Move(movement * Time.deltaTime);
-        
-        
-        // movement turning with A D
-        float move = Input.GetAxisRaw("Vertical");
-        float turn = Input.GetAxisRaw("Horizontal");
-
-        transform.Rotate(Vector3.up, turn * 120f * Time.deltaTime);
-        controller.Move(transform.forward * move * moveSpeed * Time.deltaTime);
-        
-        
-        // free mouse look
-        yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        pitch = Mathf.Clamp(pitch, -30f, 70f);
-        cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
-        
-
-
-        
-        // trying this
-        // it doesn't have move foreward and back or look up or down
-        yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        yaw += Input.GetAxisRaw("Horizontal") * keyboardTurnSpeed * Time.deltaTime;
-        cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
-        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
-        */
-
-
-
-
-        // keep the camera with the player
-        // cameraPivot.position = transform.position;
 
 
 

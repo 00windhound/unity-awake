@@ -47,46 +47,133 @@ backwards is glitchy, turning sensitivity is bad,
 
 combonation 7:
 movement where body faces, rotate face camera, free orbit
-observations: 
+observations: bad
+turning is glitchy, A and D do nothing
 
 
 
 combonation 8:
 movement where body faces, rotate face camera, camera fixed
-observations: 
+observations: bad
+unable to turn or rotate at all
 
 
 
 combonation 9:
 movement where body faces, rotate A D, free orbit
-observations: 
+observations: good
+functional, although don't love this style
 
 
 
 
 combonation 10:
 movement where body faces, rotate A D, camera fixed
-observations: 
+observations: good
+feels like a previous combonation..
 
 
 
 combonation 11:
 movement where body faces, rotate face movement, free orbit
-observations: 
+observations: bad
+backwards is glitchy, unable to turn
 
 
 
 combonation 12:
 movement where body faces, rotate face movement, camera fixed
-observations: 
+observations: bad
+backwards is glichy, unable to turn
 
 
 
 
 
 viable combonations:
-combo 1: movement where camera looks, rotation face camera, free orbit
+combo 2: movement where camera looks, rotation face camera, free orbit
 combo 4: movement where camera looks, rotate A D, camera fixed
 combo 5: movement where camera looks, rotate face movement, free orbit
+combo 9: movement where body faces, rotate A D, free orbit
+combo 10: movement where body faces, rotate A D, camera fixed
+
+
+
+
+code tested:
+
+
+
+
+        //movement 
+
+        /*
+        //movement style: move where camera looks
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+        Vector3 direction = forward * move + right * turn;
+        controller.Move(direction * moveSpeed * Time.deltaTime);
+        */
+        
+        // movement style: move where body faces
+        Vector3 direction = transform.forward * move;
+        controller.Move(direction * moveSpeed * Time.deltaTime);
+        
+
+
+        // rotation
+
+        /*
+        // rotation style: face camera
+        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+        */
+        
+        /*
+        // rotation style: turn from A and D
+        transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+        */
+
+        
+        // rotation style: face movement
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            Quaternion target = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, 8f * Time.deltaTime);
+        }
+        
+
+
+        // camera
+
+        /*
+        // camera style: first person
+        cameraTransform.localPosition = new Vector3(0f, 1.5f, 0f);
+        */
+
+
+        // camera style: third person follow behind
+        cameraTransform.localPosition = new Vector3(0f, 1f, -2.5f);
+
+        /*
+        // camera style: free orbit
+        yaw += mouseX * mouseSensitivity * Time.deltaTime;
+        pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+        pitch = Mathf.Clamp(pitch, -30f, 70f);
+        cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        */
+
+        
+        // camera style: fixed
+        pitch -= mouseY * mouseSensitivity * Time.deltaTime;
+        pitch = Mathf.Clamp(pitch, -30f, 70f);
+        cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
+        
+
+        // keep the camera with the player
+        cameraPivot.position = transform.position + Vector3.up * 1.5f;
 
 
