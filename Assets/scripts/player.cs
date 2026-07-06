@@ -24,11 +24,12 @@ public class player : MonoBehaviour
     interactable carriedObject;
     bool bulldozing = false;
     bool menuOpen = false;
-    public float gravity = -20f;
+    float gravity = -20f;
     float verticalVelocity = 0f;
     public int movementStyle = 1;
     //float yaw;// camera left right
     //float pitch;// camera up down
+    
 
    
     void Start()
@@ -42,9 +43,6 @@ public class player : MonoBehaviour
     
     void Update()
     {
-        //float move;
-        //float turn;
-        // getting input
         float turn = Input.GetAxisRaw("Horizontal");
         float move = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
@@ -52,9 +50,7 @@ public class player : MonoBehaviour
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
         Vector3 direction;
-
-        // fix floating in the air
-        // button to change movement style
+        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             movementStyle++;
@@ -65,16 +61,30 @@ public class player : MonoBehaviour
         }
 
 
+        // gravity
+        if (controller.isGrounded)
+        {
+            if (verticalVelocity < 0)
+            {
+                verticalVelocity = -2f;
+            }
+        }
+        else
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+        }
+
+
+
         switch (movementStyle)
         {
             case 1:// combo 1: movement where camera looks, rotation face camera, free orbit
-                //Vector3 forward = cameraTransform.forward;
-                //Vector3 right = cameraTransform.right;
                 forward.y = 0;
                 right.y = 0;
                 forward.Normalize();
                 right.Normalize();
                 direction = forward * move + right * turn;
+                direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
                 transform.rotation = Quaternion.Euler(0f, yaw, 0f);
                 yaw += mouseX * mouseSensitivity * Time.deltaTime;
@@ -84,13 +94,12 @@ public class player : MonoBehaviour
                 break;
 
             case 2:// combo 4: movement where camera looks, rotate A D, camera fixed
-                //Vector3 forward = cameraTransform.forward;
-                //Vector3 right = cameraTransform.right;
                 forward.y = 0;
                 right.y = 0;
                 forward.Normalize();
                 right.Normalize();
-                direction = forward * move + right * turn;//error here
+                direction = forward * move + right * turn;
+                direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
@@ -99,13 +108,12 @@ public class player : MonoBehaviour
                 break;
 
             case 3:// combo 5: movement where camera looks, rotate face movement, free orbit
-                //Vector3 forward = cameraTransform.forward;
-                //Vector3 right = cameraTransform.right;
                 forward.y = 0;
                 right.y = 0;
                 forward.Normalize();
                 right.Normalize();
-                direction = forward * move + right * turn;//error here
+                direction = forward * move + right * turn;
+                direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
                 if (direction.sqrMagnitude > 0.01f)
                 {
@@ -120,6 +128,7 @@ public class player : MonoBehaviour
 
             case 4:// combo 9: movement where body faces, rotate A D, free orbit
                 direction = transform.forward * move;
+                direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
                 yaw += mouseX * mouseSensitivity * Time.deltaTime;
@@ -130,6 +139,7 @@ public class player : MonoBehaviour
 
             case 5:// combo 10: movement where body faces, rotate A D, camera fixed
                 direction = transform.forward * move;
+                direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
