@@ -1,0 +1,11 @@
+
+fix player not on ground
+gravity broke a lot of my movement modes
+
+jumping
+escape or pause to be able to press buttons
+save and load game
+making basic player character/ animal character
+first person
+fix pick up things
+ui needs load save buttons, total plant count
