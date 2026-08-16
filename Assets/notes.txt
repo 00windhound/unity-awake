@@ -9,3 +9,5 @@ making basic player character/ animal character
 first person
 fix pick up things
 ui needs load save buttons, total plant count
+
+plants evolve with shake keys
