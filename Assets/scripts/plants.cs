@@ -19,11 +19,11 @@ public class plants : livingThing
     public GameObject stickPrefab;
     //public Transform sticks;
     public Renderer plantRenderer;
-    public MeshFilter trunkMeshFilter;
     public plantDNA dna;
-    public float growth = 0.01f;
+    public float growth = 0.1f;
     public float maxAge = 100f;
     public List<Stick> sticks = new List<Stick>();
+    public SkinnedMeshRenderer trunkRenderer;
     bool seeground = false;
     bool isupright = true;
     float checkTime;
@@ -38,6 +38,7 @@ public class plants : livingThing
         base.Start();
         checkTime = Time.time + Random.Range(0f, 5f);
         plantRenderer = GetComponentInChildren<Renderer>();
+        trunkRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         roundCollision = GetComponent<CapsuleCollider>();
         boxCollision = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
@@ -186,7 +187,15 @@ public class plants : livingThing
         // apply trunk color
         plantRenderer.material.color = dna.stemColor;
         
-        
+
+        //change trunk shape keys
+        int height5 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height5");
+        trunkRenderer.SetBlendShapeWeight(height5, 80f);
+
+        int height3 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height3");
+        trunkRenderer.SetBlendShapeWeight(height3, 100f);
+
+        /*
         // change trunk shape
         Mesh workingTrunkMesh;
         UnityEngine.Vector3[] origionalVerts;
@@ -229,6 +238,7 @@ public class plants : livingThing
         workingTrunkMesh.RecalculateBounds();
         workingTrunkMesh.RecalculateNormals();
 
+        */
 
         // add branches
         for (int i = 0; i < dna.stickCount; i++)

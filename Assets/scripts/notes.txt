@@ -11,3 +11,6 @@ fix pick up things
 ui needs load save buttons, total plant count
 
 plants evolve with shake keys
+
+fix shape key only mildly changing
+fix plants floating
