@@ -133,15 +133,15 @@ MonoBehaviour:
   boxCollision: {fileID: 8207642791161711111}
   stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
   plantRenderer: {fileID: 3000096721615039439}
-  trunkMeshFilter: {fileID: 0}
   dna:
     stemColor: {r: 0, g: 1, b: 0, a: 1}
-    trunkSegment4Width: 1
-    trunkSegment3Width: 1
-    trunkSegment2Width: 1
-    trunkSegment1Width: 1
-    maxHeight: 1
-    maxThickness: 1
+    trunkSegment5Width: 0
+    trunkSegment4Width: 0
+    trunkSegment3Width: 0
+    trunkSegment2Width: 0
+    trunkSegment1Width: 0
+    maxHeight: 0.2
+    maxThickness: 0.2
     nutritionProtein: 0
     nutritionToxin: 0
     nutritionSugar: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   growth: 0.01
   maxAge: 100
   sticks: []
+  trunkRenderer: {fileID: 0}
   sick: 0
 --- !u!114 &817885739125368993
 MonoBehaviour:
@@ -250,7 +251,12 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 2534964839176971238, guid: cdd5c2c25606eac42a470b81f53007a0, type: 3}
   m_Bones: []
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}

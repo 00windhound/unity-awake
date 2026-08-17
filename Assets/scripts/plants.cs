@@ -190,10 +190,17 @@ public class plants : livingThing
 
         //change trunk shape keys
         int height5 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height5");
-        trunkRenderer.SetBlendShapeWeight(height5, 80f);
-
+        trunkRenderer.SetBlendShapeWeight(height5, dna.trunkSegment5Width);
+        int height4 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height4");
+        trunkRenderer.SetBlendShapeWeight(height4, dna.trunkSegment4Width);
         int height3 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height3");
-        trunkRenderer.SetBlendShapeWeight(height3, 100f);
+        trunkRenderer.SetBlendShapeWeight(height3, dna.trunkSegment3Width);
+        int height2 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height2");
+        trunkRenderer.SetBlendShapeWeight(height2, dna.trunkSegment2Width);
+        int height1 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height1");
+        trunkRenderer.SetBlendShapeWeight(height1, dna.trunkSegment1Width);
+
+
 
         /*
         // change trunk shape

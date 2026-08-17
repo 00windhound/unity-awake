@@ -12,10 +12,11 @@ public class plantDNA
    
     // stem
     public UnityEngine.Color stemColor = UnityEngine.Color.green;
-    public float trunkSegment4Width = 1f;
-    public float trunkSegment3Width = 1f;
-    public float trunkSegment2Width = 1f;
-    public float trunkSegment1Width = 1f;
+    public float trunkSegment5Width = 0f;
+    public float trunkSegment4Width = 0f;
+    public float trunkSegment3Width = 0f;
+    public float trunkSegment2Width = 0f;
+    public float trunkSegment1Width = 0f;
     public float maxHeight = 1;
     public float maxThickness = 1;
 

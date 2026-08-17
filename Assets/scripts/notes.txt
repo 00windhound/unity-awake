@@ -12,5 +12,5 @@ ui needs load save buttons, total plant count
 
 plants evolve with shake keys
 
-fix shape key only mildly changing
+revamp new limbs, dont evolve what you don't have
 fix plants floating
