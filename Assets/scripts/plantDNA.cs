@@ -10,7 +10,7 @@ public class plantDNA
     
     
    
-    // stem
+    // trunk
     public UnityEngine.Color stemColor = UnityEngine.Color.green;
     public float trunkSegment5Width = 0f;
     public float trunkSegment4Width = 0f;
@@ -19,11 +19,12 @@ public class plantDNA
     public float trunkSegment1Width = 0f;
     public float maxHeight = 1;
     public float maxThickness = 1;
+    public float trunkFlat = 1;
 
     public int nutritionProtein = 0;
     public int nutritionToxin = 0;
     public int nutritionSugar = 0;
-    //stem
+    //trunk
 
 
     // stick

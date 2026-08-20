@@ -140,7 +140,7 @@ MonoBehaviour:
     trunkSegment3Width: 0
     trunkSegment2Width: 0
     trunkSegment1Width: 0
-    maxHeight: 0.2
+    maxHeight: 0.1
     maxThickness: 0.2
     nutritionProtein: 0
     nutritionToxin: 0

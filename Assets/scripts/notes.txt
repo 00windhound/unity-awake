@@ -14,3 +14,5 @@ plants evolve with shake keys
 
 revamp new limbs, dont evolve what you don't have
 fix plants floating
+
+make sure the plants are tracking the ground right

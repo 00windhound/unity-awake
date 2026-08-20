@@ -62,7 +62,7 @@ public class spawner : MonoBehaviour
                 plantDNA babyDna = request.dna.Clone();
 
                 // dna mutation
-                int mutateGene = Random.Range(0, 16);
+                int mutateGene = Random.Range(0, 17);
                 switch(mutateGene)
                 {
                     case 0:// none
@@ -90,10 +90,13 @@ public class spawner : MonoBehaviour
                         babyDna.trunkSegment5Width = Mathf.Clamp(babyDna.trunkSegment5Width + Random.Range(-10f, 10f), 0f, 100f);
                         break;
                     case 7://max height
-                        babyDna.maxHeight = Mathf.Clamp(babyDna.maxHeight + Random.Range(-0.2f, 0.2f), 0.4f, 3f);
+                        babyDna.maxHeight = Mathf.Clamp(babyDna.maxHeight + Random.Range(-0.4f, 0.4f), 0.4f, 3f);
                         break;
                     case 8://max thickness
-                        babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.2f, 0.2f), 0.4f, 3f);
+                        babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.4f, 0.4f), 0.4f, 3f);
+                        break;
+                    case 16://trunk flat
+                        babyDna.trunkFlat = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.3f, 0.3f), 0.2f, 1f);
                         break;
                     case 9://stick count
                         babyDna.stickCount = Mathf.Clamp(babyDna.stickCount + Random.Range(-1, 2), 0, 10);

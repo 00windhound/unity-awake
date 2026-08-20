@@ -149,11 +149,13 @@ public class plants : livingThing
         boxCollision.center = new UnityEngine.Vector3(0f, growth / 2f, 0f);
 
         // resizing trunk
-        float xz = growth;
-        float y = growth;
-        if (growth > dna.maxHeight) y = dna.maxHeight; 
-        if (growth > dna.maxThickness) xz = dna.maxThickness;
-        trunk.localScale = new UnityEngine.Vector3(xz, y, xz);
+        float x = growth;// x is width or flat
+        float y = growth;// y is width
+        float z = growth;// z is height
+        if (growth > dna.maxThickness) y = dna.maxThickness;
+        if (growth > dna.maxHeight) z = dna.maxHeight;
+        x = dna.trunkFlat * y; 
+        trunk.localScale = new UnityEngine.Vector3(x, y, z);
         trunk.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
         
         // resizing sticks
