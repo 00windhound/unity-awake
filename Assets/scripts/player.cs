@@ -34,7 +34,7 @@ public class player : MonoBehaviour
    
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         playerTransform.localScale = new UnityEngine.Vector3(.5f, .5f, .5f);
         //playerTransform.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
         
@@ -43,6 +43,7 @@ public class player : MonoBehaviour
     
     void Update()
     {
+        // movement variables
         float turn = Input.GetAxisRaw("Horizontal");
         float move = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
@@ -60,7 +61,6 @@ public class player : MonoBehaviour
             }
         }
 
-
         // gravity
         if (controller.isGrounded)
         {
@@ -73,8 +73,6 @@ public class player : MonoBehaviour
         {
             verticalVelocity += gravity * Time.deltaTime;
         }
-
-
 
         switch (movementStyle)
         {
@@ -146,27 +144,10 @@ public class player : MonoBehaviour
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
                 break;
-        }
-
-
-
-
-
-
-
-
-
-
-
-       
+        }       
 
         // keep the camera with the player
         cameraPivot.position = transform.position + Vector3.up * 1.5f;
-
-
-
-
-
 
         // pick up, drop, bulldoze objects
         if (Input.GetKeyDown(KeyCode.E))
@@ -215,4 +196,14 @@ public class player : MonoBehaviour
             if (interactableItem != null){interactableItem.bulldoze();}
         }
     }
+
+
+    public void SaveGame()
+    {
+        Debug.Log("save button pressed");
+    }
+
+
+
 }
+
