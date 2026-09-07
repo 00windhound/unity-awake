@@ -198,10 +198,6 @@ public class player : MonoBehaviour
     }
 
 
-    public void SaveGame()
-    {
-        Debug.Log("save button pressed");
-    }
 
 
 

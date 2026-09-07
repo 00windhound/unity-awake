@@ -2,6 +2,9 @@
 fix player not on ground
 gravity broke a lot of my movement modes
 
+plants are spawning in sidewase
+need to write down the steps to import plants
+
 jumping
 escape or pause to be able to press buttons
 save and load game
