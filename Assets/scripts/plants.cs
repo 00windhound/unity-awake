@@ -60,6 +60,7 @@ public class plants : livingThing
         {// snap plant to ground
             transform.position = hit.point;
         }
+        saveGame.Instance.allPlants.Add(this);//add to save script
     }
 
     public void Update()
@@ -204,50 +205,6 @@ public class plants : livingThing
 
 
 
-        /*
-        // change trunk shape
-        Mesh workingTrunkMesh;
-        UnityEngine.Vector3[] origionalVerts;
-        workingTrunkMesh = Instantiate(trunkMeshFilter.mesh);
-        trunkMeshFilter.mesh = workingTrunkMesh;// create and assign clone
-        origionalVerts = workingTrunkMesh.vertices;
-        UnityEngine.Vector3[] newVerts = new UnityEngine.Vector3[origionalVerts.Length];
-        origionalVerts.CopyTo(newVerts, 0);
-        float minY = float.MaxValue;
-        float maxY = float.MinValue;
-        for (int i = 0; i < newVerts.Length; i++)
-        {
-            if (origionalVerts[i].y < minY) minY = origionalVerts[i].y;
-            if (origionalVerts[i].y > maxY) maxY = origionalVerts[i].y;
-        }
-        for (int i = 0; i < newVerts.Length; i++)
-        {
-            float heightPercent = (origionalVerts[i].y - minY) / (maxY - minY);
-            float width = 1f;
-            if (heightPercent < 0.25f)
-            {
-                width = dna.trunkSegment1Width;
-            }
-            else if (heightPercent < 0.5f)
-            {
-                width = dna.trunkSegment2Width;
-            }
-            else if (heightPercent < 0.75f)
-            {
-                width = dna.trunkSegment3Width;
-            }
-            else
-            {
-                width = dna.trunkSegment4Width;
-            }
-            newVerts[i].x *= width;
-            newVerts[i].z *= width;
-        }
-        workingTrunkMesh.vertices = newVerts;
-        workingTrunkMesh.RecalculateBounds();
-        workingTrunkMesh.RecalculateNormals();
-
-        */
 
         // add branches
         for (int i = 0; i < dna.stickCount; i++)
@@ -278,6 +235,18 @@ public class plants : livingThing
         public float angleAround;
         //public float outwardAngle;
 
+    }
+
+
+     public PlantSaveData GetSaveData()
+    {
+        PlantSaveData data = new PlantSaveData();
+
+        data.position = transform.position;
+        data.age = age;
+        data.dna = dna;
+
+        return data;
     }
 }
 

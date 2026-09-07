@@ -10,7 +10,40 @@ plants are spawning in sidewase
     need to write down the steps to import plants
     make sure the plants are tracking the ground right
 
-plan out the save game feature
+save, load, delete game
+    central script that collects and saves data
+        need to add the save script to the scene
+        plants are directly adding themselves to the running list not the spawner
+        if (worldManager.Instance != null)// put this in all kill spots or create one kill function
+        {
+            worldManager.Instance.allPlants.Remove(this);
+        }
+        holds a running list of objects or references to the objects
+        objects have a save function that passes its data
+        void Start()// plants can add themselves after deciding to live
+        {
+            worldManager.Instance.allPlants.Add(this);
+        }
+
+        public List<plants> allPlants = new List<plants>();// list for running save
+        worldManager.Instance.allPlants.Remove(this);// delete dead plant
+        public PlantSaveData GetSaveData()//when saving, this is in each plant
+{
+    PlantSaveData data = new PlantSaveData();
+
+    data.position = transform.position;
+    data.age = age;
+    data.dna = dna;
+
+    return data;
+}
+
+
+
+    can load data, creates a load spawner
+    can clear data
+    relies on minimal data and can handle other scripts being edited
+    saves plants, animals, and objects
 
 fix plants not rendering in frame since using skinned mesh renderer
 
@@ -24,3 +57,7 @@ ui needs load, save, clear data buttons, total plant count
 
 
 revamp new limbs, dont evolve what you don't have
+    rather than do you have this item yes-no, its an array of objects
+    that contain their type and dna for that type
+
+bigger goal, watch 
