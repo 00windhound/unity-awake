@@ -3,6 +3,7 @@ player movement tests.
 Iv'e separated the player movement into chunks and
 devided each chunk into diferent styles. I'm now testing each combonation 
 of chunks to find all the functioning player controll methods.
+
 the chunks and styles are.. 
 movement: where camera looks, where body faces
 rotation: face camera, A D, face movement
@@ -107,7 +108,7 @@ code tested:
 
         //movement 
 
-        /*
+        
         //movement style: move where camera looks
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -117,7 +118,7 @@ code tested:
         right.Normalize();
         Vector3 direction = forward * move + right * turn;
         controller.Move(direction * moveSpeed * Time.deltaTime);
-        */
+        
         
         // movement style: move where body faces
         Vector3 direction = transform.forward * move;
@@ -127,15 +128,13 @@ code tested:
 
         // rotation
 
-        /*
+        
         // rotation style: face camera
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
-        */
         
-        /*
+        
         // rotation style: turn from A and D
         transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
-        */
 
         
         // rotation style: face movement
@@ -149,22 +148,21 @@ code tested:
 
         // camera
 
-        /*
+        
         // camera style: first person
         cameraTransform.localPosition = new Vector3(0f, 1.5f, 0f);
-        */
 
 
         // camera style: third person follow behind
         cameraTransform.localPosition = new Vector3(0f, 1f, -2.5f);
 
-        /*
+        
         // camera style: free orbit
         yaw += mouseX * mouseSensitivity * Time.deltaTime;
         pitch -= mouseY * mouseSensitivity * Time.deltaTime;
         pitch = Mathf.Clamp(pitch, -30f, 70f);
         cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
-        */
+        
 
         
         // camera style: fixed
@@ -173,7 +171,8 @@ code tested:
         cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
         
 
-        // keep the camera with the player
+
+        // keep the camera with the player, needed for all movement styles
         cameraPivot.position = transform.position + Vector3.up * 1.5f;
 
 

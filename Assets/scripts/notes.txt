@@ -1,21 +1,24 @@
 
 fix player not on ground
+
 gravity broke a lot of my movement modes
+    movement 1jumpy, 2 good, 3 broke, 4 broke, 5 broke
+    i moved gravity chunk into 1 and 2 and nothing changed, 
+    3,4,5 still were sidewase and broke but could climb up and down the hill
 
 plants are spawning in sidewase
-need to write down the steps to import plants
+    need to write down the steps to import plants
+    make sure the plants are tracking the ground right
+
+plan out the save game feature
 
 jumping
-escape or pause to be able to press buttons
+
 save and load game
-making basic player character/ animal character
+
 first person
 fix pick up things
-ui needs load save buttons, total plant count
+ui needs load, save, clear data buttons, total plant count
 
-plants evolve with shake keys
 
 revamp new limbs, dont evolve what you don't have
-fix plants floating
-
-make sure the plants are tracking the ground right

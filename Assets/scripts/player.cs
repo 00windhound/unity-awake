@@ -52,31 +52,22 @@ public class player : MonoBehaviour
         Vector3 right = cameraTransform.right;
         Vector3 direction;
         
+
+        // gravity
+                if (controller.isGrounded){if (verticalVelocity < 0){verticalVelocity = -2f;}}
+                else{verticalVelocity += gravity * Time.deltaTime;}
+
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             movementStyle++;
-            if (movementStyle > 5)
-            {
-                movementStyle = 1;
-            }
-        }
-
-        // gravity
-        if (controller.isGrounded)
-        {
-            if (verticalVelocity < 0)
-            {
-                verticalVelocity = -2f;
-            }
-        }
-        else
-        {
-            verticalVelocity += gravity * Time.deltaTime;
+            if (movementStyle > 5){movementStyle = 1;}
         }
 
         switch (movementStyle)
         {
-            case 1:// combo 1: movement where camera looks, rotation face camera, free orbit
+            case 1:
+                // movement where camera looks
                 forward.y = 0;
                 right.y = 0;
                 forward.Normalize();
@@ -84,14 +75,18 @@ public class player : MonoBehaviour
                 direction = forward * move + right * turn;
                 direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
+                //rotate to face camera
                 transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+                // free orbit
                 yaw += mouseX * mouseSensitivity * Time.deltaTime;
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+                
                 break;
 
-            case 2:// combo 4: movement where camera looks, rotate A D, camera fixed
+            case 2:
+                // movement where camera looks
                 forward.y = 0;
                 right.y = 0;
                 forward.Normalize();
@@ -99,47 +94,58 @@ public class player : MonoBehaviour
                 direction = forward * move + right * turn;
                 direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
+                // rotate with A D
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+                // camera fixed
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
                 break;
 
-            case 3:// combo 5: movement where camera looks, rotate face movement, free orbit
-                forward.y = 0;
+            case 3:
+                // move where camera looks
+                forward.y = 0; 
                 right.y = 0;
                 forward.Normalize();
                 right.Normalize();
                 direction = forward * move + right * turn;
                 direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
-                if (direction.sqrMagnitude > 0.01f)
+                // rotate to face movement
+                if (direction.sqrMagnitude > 0.01f) 
                 {
                     Quaternion target = Quaternion.LookRotation(direction);
                     transform.rotation = Quaternion.Slerp(transform.rotation, target, 8f * Time.deltaTime);
                 }
+                // camera free orbit
                 yaw += mouseX * mouseSensitivity * Time.deltaTime;
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
                 break;
 
-            case 4:// combo 9: movement where body faces, rotate A D, free orbit
+            case 4:
+                // movement where body faces
                 direction = transform.forward * move;
                 direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
+                // rotate with A D
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+                // free orbit
                 yaw += mouseX * mouseSensitivity * Time.deltaTime;
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
                 break;
 
-            case 5:// combo 10: movement where body faces, rotate A D, camera fixed
+            case 5:
+                //movement where body faces
                 direction = transform.forward * move;
                 direction.y = verticalVelocity;
                 controller.Move(direction * moveSpeed * Time.deltaTime);
+                // rotate with A D
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
+                // camera fixed
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);

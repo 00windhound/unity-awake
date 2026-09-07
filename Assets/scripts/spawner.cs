@@ -96,7 +96,7 @@ public class spawner : MonoBehaviour
                         babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.4f, 0.4f), 0.4f, 3f);
                         break;
                     case 16://trunk flat
-                        babyDna.trunkFlat = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.3f, 0.3f), 0.2f, 1f);
+                        babyDna.trunkFlat = Mathf.Clamp(babyDna.trunkFlat + Random.Range(-0.2f, 0.2f), 0.2f, 1f);
                         break;
                     case 9://stick count
                         babyDna.stickCount = Mathf.Clamp(babyDna.stickCount + Random.Range(-1, 2), 0, 10);

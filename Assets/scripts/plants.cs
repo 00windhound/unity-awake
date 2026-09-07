@@ -156,7 +156,7 @@ public class plants : livingThing
         if (growth > dna.maxHeight) z = dna.maxHeight;
         x = dna.trunkFlat * y; 
         trunk.localScale = new UnityEngine.Vector3(x, y, z);
-        trunk.localPosition = new UnityEngine.Vector3(0f, y / 1f, 0f);
+        trunk.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
         
         // resizing sticks
          foreach (Stick s in sticks)
