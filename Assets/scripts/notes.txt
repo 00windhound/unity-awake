@@ -12,6 +12,8 @@ plants are spawning in sidewase
 
 plan out the save game feature
 
+fix plants not rendering in frame since using skinned mesh renderer
+
 jumping
 
 save and load game
