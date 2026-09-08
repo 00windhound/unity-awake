@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 
 public class plants : livingThing
@@ -44,23 +45,28 @@ public class plants : livingThing
         rb = GetComponent<Rigidbody>();
         applyDna();
         Resize();
-        age = 0;
+        //age = 0;
         float plantSize = dna.maxHeight + dna.maxThickness;
         maxAge = plantSize * 100f;
         // start age timer
         // calculate max age based on size
-        if(crowded())
+        if(age == 0)
         {
+            if(crowded())
+            {
             global.Instance.returnPlantId(id);
             Destroy(gameObject); // destroy plant if too crowded
+            }
+            else{age = 1;}
         }
+
         
         RaycastHit hit;
         if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
         {// snap plant to ground
             transform.position = hit.point;
         }
-        saveGame.Instance.allPlants.Add(this);//add to save script
+        global.Instance.plantsRunningList.Add(this);//add reference to global script
     }
 
     public void Update()
@@ -83,7 +89,7 @@ public class plants : livingThing
                 else{seeground = false;}
                 if (!seeground || !isupright)
                 {
-                    // change color not shrink.
+                    // change color
                     var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
                     plantRenderer.material.color = sickColor;
                     sick += 0.1f;
@@ -204,8 +210,6 @@ public class plants : livingThing
         trunkRenderer.SetBlendShapeWeight(height1, dna.trunkSegment1Width);
 
 
-
-
         // add branches
         for (int i = 0; i < dna.stickCount; i++)
         {
@@ -221,10 +225,28 @@ public class plants : livingThing
             sticks.Add(stickData);
         }
 
-
         //change color
         plantRenderer.material.color = dna.stemColor;
-        // branch color here
+    }
+
+
+    public PlantData Data()
+    {
+        PlantData data = new PlantData();
+        data.position = transform.position;
+        data.age = age;
+        data.growth = growth;
+        data.dna = dna;
+        return data;
+    }
+    
+    [System.Serializable]
+    public class PlantData
+    {
+        public UnityEngine.Vector3 position;
+        public float age;
+        public float growth;
+        public plantDNA dna;
     }
 
     [System.Serializable]
@@ -238,16 +260,7 @@ public class plants : livingThing
     }
 
 
-     public PlantSaveData GetSaveData()
-    {
-        PlantSaveData data = new PlantSaveData();
-
-        data.position = transform.position;
-        data.age = age;
-        data.dna = dna;
-
-        return data;
-    }
+    
 }
 
 

@@ -10,7 +10,26 @@ plants are spawning in sidewase
     need to write down the steps to import plants
     make sure the plants are tracking the ground right
 
+
+
 save, load, delete game
+    global has the running list and can call update on plants in controlled amounts
+         can save, load, delete 
+        global can respawn plants
+    steps
+        done! create and access running list with plants trying to add self
+        done! add plant to running list
+        save button on save script, create save function
+        on save, call each plants data function
+        verify data recieved in save script
+        write data to json
+        creade dead function, rerout all dying code to that function
+        dead function removes self from the runing list
+        create new button for load, or on world start trigger new load function
+        load function recreates plants, plants don't terminate if overlapping
+        plants automatically repopulate running list, the loop starts over
+        display plant count based on running list 
+
     central script that collects and saves data
         need to add the save script to the scene
         plants are directly adding themselves to the running list not the spawner

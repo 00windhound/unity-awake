@@ -10,6 +10,7 @@ public class global : MonoBehaviour
     long animalId = 0;
     List<long> plantIds = new List<long>();
     List<long> animalIds = new List<long>();
+    public List<plants> plantsRunningList = new List<plants>();// create the running list
     long totalPlants = 0;
     long totalAnimals = 0;
 
@@ -64,9 +65,26 @@ public class global : MonoBehaviour
         animalIds.Add(id);
     }
 
-    public void firstButton()
+    public void Save()
     {
-        Debug.Log("first button pressed!");
+        Debug.Log("save pressed!");
+        foreach (plants p in plantsRunningList)
+        {
+            Debug.Log(p.Data().age);
+        }
+    }
+
+       
+
+
+
+        [System.Serializable]
+    public class PlantData
+    {
+        public UnityEngine.Vector3 position;
+        public float age;
+        public float growth;
+        public plantDNA dna;
     }
 
 }

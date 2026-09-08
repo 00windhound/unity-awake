@@ -1,6 +1,7 @@
 // this is where i will save, load, autosave, and delete the game
+/*
 public class SaveGame : MonoBehaviour
-{
+{// maybe i don't want this page
     public List<plants> allPlants = new List<plants>();// create the running list
 
     public void SaveGame()
@@ -22,4 +23,4 @@ public class SaveGame : MonoBehaviour
     File.WriteAllText(path, json);
 }
 
-}
+}*/
