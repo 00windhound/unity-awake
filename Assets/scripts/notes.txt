@@ -1,6 +1,5 @@
 
 fix player not on ground
-
 gravity broke a lot of my movement modes
     movement 1jumpy, 2 good, 3 broke, 4 broke, 5 broke
     i moved gravity chunk into 1 and 2 and nothing changed, 
@@ -14,12 +13,20 @@ plants are spawning in sidewase
 
 save, load, delete game
     global has the running list and can call update on plants in controlled amounts
-         can save, load, delete 
+        can save, load, delete 
         global can respawn plants
+        plants directly add or remove themselves
+        global calls update on each plant and then waits for a timer to finnish before starting again
+
     steps
         done! create and access running list with plants trying to add self
         done! add plant to running list
-        save button on save script, create save function
+        done! create loop for plant update, with timer
+        done! global is now looping through the plant list and pausing to wait for the timer 
+            done! and its calling the new update function in the plants
+            global plant update needs to only update a few plants per frame
+            transfer plant update contents into new update function
+        save button on global script, create save function
         on save, call each plants data function
         verify data recieved in save script
         write data to json

@@ -69,6 +69,13 @@ public class plants : livingThing
         global.Instance.plantsRunningList.Add(this);//add reference to global script
     }
 
+
+    public void UpdatePlant()
+    {
+        UnityEngine.Debug.Log("meeee" + id);//update works!
+    }
+
+
     public void Update()
     {        
         if (Time.time >= checkTime)

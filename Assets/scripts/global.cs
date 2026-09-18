@@ -13,16 +13,33 @@ public class global : MonoBehaviour
     public List<plants> plantsRunningList = new List<plants>();// create the running list
     long totalPlants = 0;
     long totalAnimals = 0;
+    float timer = 3f;
+    bool plantUpdateDone = false;
+    bool timeout = false;
 
     void Awake()
     {
         Instance = this;
+        PlantsUpdate();
+        
     }
 
     
     void Update()
     {
         
+        if (plantUpdateDone && timeout)// and if timer runs out
+        {
+            plantUpdateDone = false;
+            PlantsUpdate();
+            
+        }
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            timeout = true;
+            timer = 3f; // restart timer
+        }
     }
 
     public long newPlantId()
@@ -65,6 +82,19 @@ public class global : MonoBehaviour
         animalIds.Add(id);
     }
 
+
+    public void PlantsUpdate()
+    {
+        timeout = false;
+        for (int i = 0; i < plantsRunningList.Count; i++)
+        {
+            plantsRunningList[i].UpdatePlant();
+        }
+        plantUpdateDone = true;
+    }
+
+
+
     public void Save()
     {
         Debug.Log("save pressed!");
@@ -78,7 +108,7 @@ public class global : MonoBehaviour
 
 
 
-        [System.Serializable]
+    [System.Serializable]
     public class PlantData
     {
         public UnityEngine.Vector3 position;
@@ -88,3 +118,36 @@ public class global : MonoBehaviour
     }
 
 }
+
+
+
+
+
+
+
+// this is where i will save, load, autosave, and delete the game
+/*
+public class SaveGame : MonoBehaviour
+{// maybe i don't want this page
+    public List<plants> allPlants = new List<plants>();// create the running list
+
+    public void SaveGame()
+{
+    SaveData saveData = new SaveData();
+
+    foreach (plants plant in worldManager.Instance.allPlants)
+    {
+        PlantSaveData plantData = plant.GetSaveData();
+
+        saveData.plants.Add(plantData);
+    }
+
+    string json = JsonUtility.ToJson(saveData, true);
+
+    string path =
+        Application.persistentDataPath + "/savegame.json";
+
+    File.WriteAllText(path, json);
+}
+
+}*/
