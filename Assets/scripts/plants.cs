@@ -25,9 +25,10 @@ public class plants : livingThing
     public float maxAge = 100f;
     public List<Stick> sticks = new List<Stick>();
     public SkinnedMeshRenderer trunkRenderer;
+    public float growSpeed = 1f;
     bool seeground = false;
     bool isupright = true;
-    float checkTime;
+    float lastUpdateTime;
     float old = 0f;
     public float sick = 0f;
     Rigidbody rb;
@@ -37,7 +38,6 @@ public class plants : livingThing
     protected override void Start()
     {
         base.Start();
-        checkTime = Time.time + Random.Range(0f, 5f);
         plantRenderer = GetComponentInChildren<Renderer>();
         trunkRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         roundCollision = GetComponent<CapsuleCollider>();
@@ -45,21 +45,15 @@ public class plants : livingThing
         rb = GetComponent<Rigidbody>();
         applyDna();
         Resize();
-        //age = 0;
         float plantSize = dna.maxHeight + dna.maxThickness;
         maxAge = plantSize * 100f;
         // start age timer
         // calculate max age based on size
         if(age == 0)
         {
-            if(crowded())
-            {
-            global.Instance.returnPlantId(id);
-            Destroy(gameObject); // destroy plant if too crowded
-            }
+            if(crowded()){Die();}
             else{age = 1;}
         }
-
         
         RaycastHit hit;
         if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
@@ -73,77 +67,58 @@ public class plants : livingThing
     public void UpdatePlant()
     {
         UnityEngine.Debug.Log("meeee" + id);//update works!
-    }
-
-
-    public void Update()
-    {        
-        if (Time.time >= checkTime)
+        if (Time.time > lastUpdateTime + growSpeed)
         {
-            age +=1;
-            long thidss = id;
-            checkTime = Time.time + 5f;
-            if (age % 1 ==0)
-            {
-                RaycastHit hit;// if on the ground
-                if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
-                {
-                    seeground = true;
-                    float upright = UnityEngine.Vector3.Dot(transform.up, hit.normal);
-                    if (upright < 0.8f){isupright = false;}
-                    else{isupright = true;}
-                }
-                else{seeground = false;}
-                if (!seeground || !isupright)
-                {
-                    // change color
-                    var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
-                    plantRenderer.material.color = sickColor;
-                    sick += 0.1f;
-                    if (sick > .8f)
-                    {
-                        global.Instance.returnPlantId(id);
-                        Destroy(gameObject); // kill sick plant
-                    } 
-                }
-                else 
-                {
-                    if(rb != null && !rb.isKinematic)
-                    { // root itself
-                        rb.isKinematic = true;
-                        rb.useGravity = false;
-                    }
-                    if (growth < dna.maxHeight || growth < dna.maxThickness)
-                    {
-                        if (!crowded())
-                        {
-                            growth += 0.01f;
-                            Resize(); // Grow plant
-                        }
-                    }
-                    if (sick > 0f)
-                    {
-                        sick -= 0.1f; // recover if not sick anymore
-                        var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
-                        plantRenderer.material.color = recoverColor;
-                    };
-                    
-                }
+            lastUpdateTime = Time.time;
+            age +=1; 
 
-                // old age
-                if (age > maxAge)
-                {
-                    // old age color
-                    var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
-                    plantRenderer.material.color = oldColor;
-                    old += 0.1f;
-                    if (old > .8f)
-                    {
-                        global.Instance.returnPlantId(id);
-                        Destroy(gameObject); // kill old plant
-                    }
-                }
+            RaycastHit hit;// check if on the ground
+            if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
+            {
+                seeground = true;
+                float upright = UnityEngine.Vector3.Dot(transform.up, hit.normal);
+                if (upright < 0.8f){isupright = false;}
+                else{isupright = true;}
             }
+            else{seeground = false;}
+            if (!seeground || !isupright)
+            {
+                // sick plant, change color
+                var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
+                plantRenderer.material.color = sickColor;
+                sick += 0.1f;
+                if (sick > .8f){Die();} 
+            }
+            else 
+            {
+                if(rb != null && !rb.isKinematic)
+                { // root itself
+                    rb.isKinematic = true;
+                    rb.useGravity = false;
+                }
+                if (growth < dna.maxHeight || growth < dna.maxThickness)
+                {// grow the plant
+                    if (!crowded()) {growth += 0.01f; Resize();}
+                }
+                if (sick > 0f)// recover if not sick anymore
+                {
+                    sick -= 0.1f; 
+                    var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
+                    plantRenderer.material.color = recoverColor;
+                };
+                    
+            }
+
+            // old age
+            if (age > maxAge)
+            {
+                // old age color
+                var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
+                plantRenderer.material.color = oldColor;
+                old += 0.1f;
+                if (old > .8f){Die();}
+            }
+            
             //breeding
             if (age % dna.breedingFrequency == 0 && !crowded() && growth > dna.maxHeight * 0.8f)
             {
@@ -151,7 +126,16 @@ public class plants : livingThing
                 spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
             }
         }
+        
     }
+
+    public void Die()
+    {
+        global.Instance.returnPlantId(id);
+        global.Instance.plantsRunningList.Remove(this);
+        Destroy(gameObject);
+    }
+
 
     public void Resize()
     {

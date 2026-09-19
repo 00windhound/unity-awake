@@ -13,7 +13,7 @@ public class global : MonoBehaviour
     public List<plants> plantsRunningList = new List<plants>();// create the running list
     long totalPlants = 0;
     long totalAnimals = 0;
-    float timer = 3f;
+    float timer = 1.2f;
     bool timeout = false;
     int plantsPerFrame = 10;
     int x = 0;
@@ -47,7 +47,7 @@ public class global : MonoBehaviour
         if (timer <= 0)
         {
             timeout = true;
-            timer = 3f; // restart timer
+            timer = 1.2f; // restart timer
         }
 
     }
