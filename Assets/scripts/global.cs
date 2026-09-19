@@ -14,25 +14,34 @@ public class global : MonoBehaviour
     long totalPlants = 0;
     long totalAnimals = 0;
     float timer = 3f;
-    bool plantUpdateDone = false;
     bool timeout = false;
+    int plantsPerFrame = 10;
+    int x = 0;
 
     void Awake()
     {
         Instance = this;
-        PlantsUpdate();
-        
     }
 
     
     void Update()
     {
-        
-        if (plantUpdateDone && timeout)// and if timer runs out
+        for(int i = 0; i < plantsPerFrame; i++)
         {
-            plantUpdateDone = false;
-            PlantsUpdate();
             
+            if (x < 0)
+            {
+                if (timeout)
+                {
+                x = plantsRunningList.Count;
+                timeout = false;
+                }
+            }
+            else if (plantsRunningList[x])
+            {
+                plantsRunningList[x].UpdatePlant();
+            }
+            x--;
         }
         timer -= Time.deltaTime;
         if (timer <= 0)
@@ -40,6 +49,7 @@ public class global : MonoBehaviour
             timeout = true;
             timer = 3f; // restart timer
         }
+
     }
 
     public long newPlantId()
@@ -82,16 +92,6 @@ public class global : MonoBehaviour
         animalIds.Add(id);
     }
 
-
-    public void PlantsUpdate()
-    {
-        timeout = false;
-        for (int i = 0; i < plantsRunningList.Count; i++)
-        {
-            plantsRunningList[i].UpdatePlant();
-        }
-        plantUpdateDone = true;
-    }
 
 
 

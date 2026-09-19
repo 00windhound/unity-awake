@@ -26,6 +26,7 @@ save, load, delete game
             done! and its calling the new update function in the plants
             global plant update needs to only update a few plants per frame
             transfer plant update contents into new update function
+            make a wait time for plants so they don't trigger too fast and can grow slower
         save button on global script, create save function
         on save, call each plants data function
         verify data recieved in save script
