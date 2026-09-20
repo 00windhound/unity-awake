@@ -100,7 +100,10 @@ public class global : MonoBehaviour
         Debug.Log("save pressed!");
         foreach (plants p in plantsRunningList)
         {
-            Debug.Log(p.Data().age);
+            if(p == null){continue;}
+            var data = p.Data();
+            Debug.Log("age is "+data.age);
+            
         }
     }
 

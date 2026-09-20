@@ -9,7 +9,9 @@ plants are spawning in sidewase
     need to write down the steps to import plants
     make sure the plants are tracking the ground right
 
-plant max height is getting really extreme too fast in just one generation
+plant mutation
+    plant max height is getting really extreme too fast in just one generation
+    plant segments are too mild 
 
 save, load, delete game
     global has the running list and can call update on plants in controlled amounts
@@ -24,15 +26,12 @@ save, load, delete game
         done! create loop for plant update, with timer
         done! global is now looping through the plant list and pausing to wait for the timer 
             done! and its calling the new update function in the plants
-            transfer plant update contents into new update function
-            in global create check that if the list shrinks, im not double updating plants
-                const grow speed save last update time; if current time > last update + grow speed then update
-        save button on global script, create save function
-        on save, call each plants data function
-        verify data recieved in save script
+            done! transfer plant update contents into new update function
+            done! create check that if the list shrinks, im not double updating plants
+        done! save button on global script, create save function
+        done! on save, call each plants data function, recieve data
+        add data to a list(make sure list can be turned into json easily)
         write data to json
-        creade dead function, rerout all dying code to that function
-        dead function removes self from the runing list
         create new button for load, or on world start trigger new load function
         load function recreates plants, plants don't terminate if overlapping
         plants automatically repopulate running list, the loop starts over

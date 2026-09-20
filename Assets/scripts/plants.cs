@@ -66,7 +66,6 @@ public class plants : livingThing
 
     public void UpdatePlant()
     {
-        UnityEngine.Debug.Log("meeee" + id);//update works!
         if (Time.time > lastUpdateTime + growSpeed)
         {
             lastUpdateTime = Time.time;
