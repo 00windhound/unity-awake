@@ -8,6 +8,7 @@ using UnityEngine;
 public class global : MonoBehaviour
 {
     public static global Instance;
+    public GameObject plantPrefab;
     long plantId = 0;
     long animalId = 0;
     List<long> plantIds = new List<long>();
@@ -26,6 +27,10 @@ public class global : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        Load();
+    }
     
 
     void Update()
@@ -85,16 +90,10 @@ public class global : MonoBehaviour
     }
 
     public void returnPlantId(long id)
-    {
-        totalPlants--;
-        plantIds.Add(id); 
-    }
+    {totalPlants--; plantIds.Add(id);}
 
     public void returnAnimalId(long id)
-    {
-        totalAnimals--;
-        animalIds.Add(id);
-    }
+    {totalAnimals--; animalIds.Add(id);}
 
 
     public void Save()
@@ -117,6 +116,27 @@ public class global : MonoBehaviour
 
         //Debug.Log(Application.persistentDataPath);// gives me the path to see my saved data
     }
+
+
+    public void Load()
+    {
+        string path = Application.persistentDataPath + "/savegame.json";
+        if (!File.Exists(path)){Debug.Log("No save file found."); return;}
+        
+        string json = File.ReadAllText(path);
+        SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+        
+        foreach (plants.PlantData data in saveData.plants)
+        {
+        // create plant and give it the saved data
+        GameObject newPlant = Instantiate(plantPrefab, data.position, Quaternion.identity);
+        plants plant = newPlant.GetComponent<plants>();
+
+        plant.LoadData(data);
+        }
+    }
+
+
 
     [System.Serializable]
     public class SaveData

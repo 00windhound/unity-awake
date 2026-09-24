@@ -21,6 +21,8 @@ save, load, delete game
         global can respawn plants
         plants directly add or remove themselves
         global calls update on each plant and then waits for a timer to finnish before starting again
+        plants have a load data function
+            assign their own data and reflects it immediately, not waiting on update or whatever else
 
     steps
         done! create and access running list with plants trying to add self

@@ -222,7 +222,7 @@ public class plants : livingThing
     }
 
 
-    public PlantData Data()
+    public PlantData Data()// for saving the game
     {
         PlantData data = new PlantData();
         data.position = transform.position;
@@ -230,6 +230,14 @@ public class plants : livingThing
         data.growth = growth;
         data.dna = dna;
         return data;
+    }
+
+    public void LoadData(PlantData data)
+    {
+        transform.position = data.position;
+        age = data.age;
+        growth = data.growth;
+        dna = data.dna;
     }
     
     [System.Serializable]

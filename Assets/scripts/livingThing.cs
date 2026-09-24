@@ -6,7 +6,7 @@ using UnityEngine;
 public class livingThing : MonoBehaviour
 {
     public long id;
-    public int age = 0;
+    public float age = 0;
    
     
     
@@ -16,6 +16,4 @@ public class livingThing : MonoBehaviour
         id = global.Instance.newPlantId();
     }
 
-
-    //protected virtual void Update(){age++;}
 }
