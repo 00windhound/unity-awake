@@ -1,5 +1,5 @@
 
-fix player not on ground
+
 gravity broke a lot of my movement modes
     movement 1jumpy, 2 good, 3 broke, 4 broke, 5 broke
     i moved gravity chunk into 1 and 2 and nothing changed, 
@@ -9,9 +9,11 @@ plants are spawning in sidewase
     need to write down the steps to import plants
     make sure the plants are tracking the ground right
 
-plant mutation
-    plant max height is getting really extreme too fast in just one generation
-    plant segments are too mild 
+plants
+    max age and grow speed need to be related
+        have one dna variable. 
+     
+
 
 save, load, delete game
     global has the running list and can call update on plants in controlled amounts

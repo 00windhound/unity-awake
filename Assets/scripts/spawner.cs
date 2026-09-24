@@ -67,33 +67,33 @@ public class spawner : MonoBehaviour
                 {
                     case 0:// none
                         break;
-                    case 1:// stem color
+                    case 1:// trunk color
                         babyDna.stemColor = new Color(
-                            Mathf.Clamp01(babyDna.stemColor.r + Random.Range(-0.2f, 0.2f)),
-                            Mathf.Clamp01(babyDna.stemColor.g + Random.Range(-0.2f, 0.2f)),
-                            Mathf.Clamp01(babyDna.stemColor.b + Random.Range(-0.2f, 0.2f))
+                            Mathf.Clamp01(babyDna.stemColor.r + Random.Range(-1f, 1f)),
+                            Mathf.Clamp01(babyDna.stemColor.g + Random.Range(-1f, 1f)),
+                            Mathf.Clamp01(babyDna.stemColor.b + Random.Range(-1f, 1f))
                         );
                         break;
                     case 2:// trunk segment 1
-                        babyDna.trunkSegment1Width = Mathf.Clamp(babyDna.trunkSegment1Width + Random.Range(-10f, 10f), 0f, 100f);
+                        babyDna.trunkSegment1Width = Mathf.Clamp(babyDna.trunkSegment1Width + Random.Range(-30f, 30f), 0f, 100f);
                         break;
                     case 3:// trunk segment 2
-                        babyDna.trunkSegment2Width = Mathf.Clamp(babyDna.trunkSegment2Width + Random.Range(-10f, 10f), 0f, 100f);
+                        babyDna.trunkSegment2Width = Mathf.Clamp(babyDna.trunkSegment2Width + Random.Range(-30f, 30f), 0f, 100f);
                         break;
                     case 4:// trunk segment 3
-                        babyDna.trunkSegment3Width = Mathf.Clamp(babyDna.trunkSegment3Width + Random.Range(-10f, 10f), 0f, 100f);
+                        babyDna.trunkSegment3Width = Mathf.Clamp(babyDna.trunkSegment3Width + Random.Range(-30f, 30f), 0f, 100f);
                         break;
                     case 5:// trunk segment 4
-                        babyDna.trunkSegment4Width = Mathf.Clamp(babyDna.trunkSegment4Width + Random.Range(-10f, 10f), 0f, 100f);
+                        babyDna.trunkSegment4Width = Mathf.Clamp(babyDna.trunkSegment4Width + Random.Range(-30f, 30f), 0f, 100f);
                         break;
                     case 6:// trunk segment 5
-                        babyDna.trunkSegment5Width = Mathf.Clamp(babyDna.trunkSegment5Width + Random.Range(-10f, 10f), 0f, 100f);
+                        babyDna.trunkSegment5Width = Mathf.Clamp(babyDna.trunkSegment5Width + Random.Range(-30f, 30f), 0f, 100f);
                         break;
                     case 7://max height
-                        babyDna.maxHeight = Mathf.Clamp(babyDna.maxHeight + Random.Range(-0.4f, 0.4f), 0.4f, 3f);
+                        babyDna.maxHeight = Mathf.Clamp(babyDna.maxHeight + Random.Range(-0.2f, 0.2f), 0.4f, 8f);
                         break;
                     case 8://max thickness
-                        babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.4f, 0.4f), 0.4f, 3f);
+                        babyDna.maxThickness = Mathf.Clamp(babyDna.maxThickness + Random.Range(-0.4f, 0.4f), 0.4f, 8f);
                         break;
                     case 16://trunk flat
                         babyDna.trunkFlat = Mathf.Clamp(babyDna.trunkFlat + Random.Range(-0.2f, 0.2f), 0.2f, 1f);

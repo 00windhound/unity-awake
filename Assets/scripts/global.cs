@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;// to make my save lists work
+using System.IO;// to save and load files
 using UnityEngine;
 
 public class global : MonoBehaviour
@@ -11,6 +13,7 @@ public class global : MonoBehaviour
     List<long> plantIds = new List<long>();
     List<long> animalIds = new List<long>();
     public List<plants> plantsRunningList = new List<plants>();// create the running list
+    public List<plants.PlantData> plantsToSave = new  List<plants.PlantData>();
     long totalPlants = 0;
     long totalAnimals = 0;
     float timer = 1.2f;
@@ -24,6 +27,7 @@ public class global : MonoBehaviour
     }
 
     
+
     void Update()
     {
         for(int i = 0; i < plantsPerFrame; i++)
@@ -93,32 +97,34 @@ public class global : MonoBehaviour
     }
 
 
-
-
     public void Save()
     {
-        Debug.Log("save pressed!");
+        //Debug.Log("save pressed!");
+        plantsToSave.Clear();
         foreach (plants p in plantsRunningList)
         {
             if(p == null){continue;}
-            var data = p.Data();
-            Debug.Log("age is "+data.age);
-            
+            plantsToSave.Add(p.Data());
         }
+        
+        SaveData saveData = new SaveData();
+        saveData.plants = plantsToSave;
+
+        string json = JsonUtility.ToJson(saveData, true);
+        Debug.Log("json: " + json);// json {} is empty
+        string path = Application.persistentDataPath + "/saveGame.json";
+        File.WriteAllText(path, json);
+
+        //Debug.Log(Application.persistentDataPath);// gives me the path to see my saved data
     }
-
-       
-
-
 
     [System.Serializable]
-    public class PlantData
+    public class SaveData
     {
-        public UnityEngine.Vector3 position;
-        public float age;
-        public float growth;
-        public plantDNA dna;
-    }
+        public List<plants.PlantData> plants;
+        // public List<animals.AnimalData> animals;
+    } 
+
 
 }
 

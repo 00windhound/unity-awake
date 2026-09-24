@@ -142,6 +142,7 @@ MonoBehaviour:
     trunkSegment1Width: 0
     maxHeight: 0.1
     maxThickness: 0.2
+    trunkFlat: 1
     nutritionProtein: 0
     nutritionToxin: 0
     nutritionSugar: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
   maxAge: 100
   sticks: []
   trunkRenderer: {fileID: 0}
+  growSpeed: 1
   sick: 0
 --- !u!114 &817885739125368993
 MonoBehaviour:

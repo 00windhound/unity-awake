@@ -205,9 +205,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 708645039}
-        m_TargetAssemblyTypeName: player, Assembly-CSharp
-        m_MethodName: SaveGame
+      - m_Target: {fileID: 733274844}
+        m_TargetAssemblyTypeName: global, Assembly-CSharp
+        m_MethodName: Save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -542,17 +542,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &708645039 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6899252906396141188, guid: 784bc85a363e572478954a8872abb4cb, type: 3}
-  m_PrefabInstance: {fileID: 6991517058118315300}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3601495d61ddaab459d88699d50630b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &733274843
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f229ccc982541848af5e27b1e42ebe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantsRunningList: []
 --- !u!4 &733274845
 Transform:
   m_ObjectHideFlags: 0

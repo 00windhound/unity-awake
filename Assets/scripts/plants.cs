@@ -114,6 +114,8 @@ public class plants : livingThing
                 // old age color
                 var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
                 plantRenderer.material.color = oldColor;
+                growth -= 0.02f;
+                Resize();
                 old += 0.1f;
                 if (old > .8f){Die();}
             }
