@@ -8,7 +8,9 @@ using UnityEngine;
 public class plantDNA
 {
     
-    
+    //basic
+    public float growthSpeed = 1.0f;
+    //basic
    
     // trunk
     public UnityEngine.Color stemColor = UnityEngine.Color.green;

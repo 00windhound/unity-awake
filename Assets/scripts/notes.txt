@@ -1,28 +1,25 @@
 
 
-gravity broke a lot of my movement modes
-    movement 1jumpy, 2 good, 3 broke, 4 broke, 5 broke
-    i moved gravity chunk into 1 and 2 and nothing changed, 
-    3,4,5 still were sidewase and broke but could climb up and down the hill
+player
+    gravity broke a lot of my movement modes
+        movement 1jumpy, 2 good, 3 broke, 4 broke, 5 broke
+        i moved gravity chunk into 1 and 2 and nothing changed, 
+        3,4,5 still were sidewase and broke but could climb up and down the hill
+    i want to look strait up or a little past, looking up is locked too low
 
 plants are spawning in sidewase
     need to write down the steps to import plants
     make sure the plants are tracking the ground right
 
 plants
-    max age and grow speed need to be related
-        have one dna variable. 
+    plants are spawning in up side down, causing them to be sick and die
+    the plant prefab is upside down
+    saved plants might not be spawning right. 
+    consider loading plants using the spawner to reduce spawn differences and confusion
      
 
 
-save, load, delete game
-    global has the running list and can call update on plants in controlled amounts
-        can save, load, delete 
-        global can respawn plants
-        plants directly add or remove themselves
-        global calls update on each plant and then waits for a timer to finnish before starting again
-        plants have a load data function
-            assign their own data and reflects it immediately, not waiting on update or whatever else
+need to delete saved game
 
     steps
         done! create and access running list with plants trying to add self

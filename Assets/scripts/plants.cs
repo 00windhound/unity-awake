@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+//using System.Drawing;
 
 
 public class plants : livingThing
@@ -20,18 +21,16 @@ public class plants : livingThing
     public GameObject stickPrefab;
     //public Transform sticks;
     public Renderer plantRenderer;
-    public plantDNA dna;
+    
     public float growth = 0.1f;
     public float maxAge = 100f;
     public List<Stick> sticks = new List<Stick>();
     public SkinnedMeshRenderer trunkRenderer;
     public float growSpeed = 1f;
-    bool seeground = false;
-    bool isupright = true;
     float lastUpdateTime;
-    float old = 0f;
     public float sick = 0f;
     Rigidbody rb;
+    public plantDNA dna;
     
     
 
@@ -45,10 +44,7 @@ public class plants : livingThing
         rb = GetComponent<Rigidbody>();
         applyDna();
         Resize();
-        float plantSize = dna.maxHeight + dna.maxThickness;
-        maxAge = plantSize * 100f;
-        // start age timer
-        // calculate max age based on size
+        maxAge = maxAge * (dna.growthSpeed * (dna.maxHeight * dna.maxThickness));
         if(age == 0)
         {
             if(crowded()){Die();}
@@ -71,64 +67,57 @@ public class plants : livingThing
             lastUpdateTime = Time.time;
             age +=1; 
 
-            RaycastHit hit;// check if on the ground
-            if (Physics.Raycast(transform.position + UnityEngine.Vector3.up, UnityEngine.Vector3.down, out hit, 10f, groundLayer))
+            bool healthy = true;
+
+            RaycastHit hit;
+            if(!Physics.Raycast(transform.position + UnityEngine.Vector3.up * .2f, UnityEngine.Vector3.down, out hit, 1f, groundLayer))
+            {healthy = false;}// cant see the ground
+
+            if(UnityEngine.Vector3.Dot(transform.up, hit.normal) < 0.8f)
+            {healthy = false;}// not upright
+
+            if(age > maxAge)
+            {healthy = false;}// old age
+
+            if(!healthy)
             {
-                seeground = true;
-                float upright = UnityEngine.Vector3.Dot(transform.up, hit.normal);
-                if (upright < 0.8f){isupright = false;}
-                else{isupright = true;}
-            }
-            else{seeground = false;}
-            if (!seeground || !isupright)
-            {
-                // sick plant, change color
                 var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
                 plantRenderer.material.color = sickColor;
+                growth -= 0.02f;
+                Resize();
                 sick += 0.1f;
                 if (sick > .8f){Die();} 
             }
-            else 
+            else // healthy
             {
+                // make sure it's rooted
                 if(rb != null && !rb.isKinematic)
-                { // root itself
+                {
                     rb.isKinematic = true;
                     rb.useGravity = false;
                 }
+                // grow the plant
                 if (growth < dna.maxHeight || growth < dna.maxThickness)
-                {// grow the plant
+                {
                     if (!crowded()) {growth += 0.01f; Resize();}
                 }
+                // recover from sickness
                 if (sick > 0f)// recover if not sick anymore
                 {
                     sick -= 0.1f; 
                     var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
                     plantRenderer.material.color = recoverColor;
-                };
-                    
-            }
-
-            // old age
-            if (age > maxAge)
-            {
-                // old age color
-                var oldColor = Color.Lerp(dna.stemColor, Color.black, old);
-                plantRenderer.material.color = oldColor;
-                growth -= 0.02f;
-                Resize();
-                old += 0.1f;
-                if (old > .8f){Die();}
-            }
-            
-            //breeding
-            if (age % dna.breedingFrequency == 0 && !crowded() && growth > dna.maxHeight * 0.8f)
-            {
-                UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
-                spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
+                }
+                // breeding
+                if (age % dna.breedingFrequency == 0 && !crowded() && growth > dna.maxHeight * 0.8f)
+                {
+                    UnityEngine.Vector3 babyLocation = transform.position + new UnityEngine.Vector3( Random.Range(-3f, 3f),0f,Random.Range(-3f, 3f));
+                    spawner.InstanceCreator.SpawnPlant(babyLocation, dna);
+                }    
             }
         }
-        
     }
+
 
     public void Die()
     {
@@ -153,7 +142,7 @@ public class plants : livingThing
         float z = growth;// z is height
         if (growth > dna.maxThickness) y = dna.maxThickness;
         if (growth > dna.maxHeight) z = dna.maxHeight;
-        x = dna.trunkFlat * y; 
+        x = dna.trunkFlat * y; //is this right?
         trunk.localScale = new UnityEngine.Vector3(x, y, z);
         trunk.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
         
@@ -229,6 +218,7 @@ public class plants : livingThing
         data.age = age;
         data.growth = growth;
         data.dna = dna;
+        data.sick = sick;
         return data;
     }
 
@@ -238,8 +228,12 @@ public class plants : livingThing
         age = data.age;
         growth = data.growth;
         dna = data.dna;
+        sick = data.sick;
     }
     
+
+
+
     [System.Serializable]
     public class PlantData
     {
@@ -247,6 +241,7 @@ public class plants : livingThing
         public float age;
         public float growth;
         public plantDNA dna;
+        public float sick;
     }
 
     [System.Serializable]

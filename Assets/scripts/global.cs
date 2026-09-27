@@ -17,9 +17,8 @@ public class global : MonoBehaviour
     public List<plants.PlantData> plantsToSave = new  List<plants.PlantData>();
     long totalPlants = 0;
     long totalAnimals = 0;
-    float timer = 1.2f;
+    float timer = 30f;
     bool timeout = false;
-    int plantsPerFrame = 10;
     int x = 0;
 
     void Awake()
@@ -35,29 +34,27 @@ public class global : MonoBehaviour
 
     void Update()
     {
-        for(int i = 0; i < plantsPerFrame; i++)
+        for(int i = 0; i < 20; i++)
         {
+            //if(timeout){Debug.Log("timeout. x = " + x);}
             
             if (x < 0)
             {
                 if (timeout)
                 {
-                x = plantsRunningList.Count;
-                timeout = false;
+                    x = plantsRunningList.Count;
+                    timeout = false;
                 }
             }
             else if (plantsRunningList[x])
             {
                 plantsRunningList[x].UpdatePlant();
+                if(timeout){Debug.Log("timeout. " + x + " plants still need to update. adjust plants per frame or timeout length to avoid plant growth delay.");}
             }
             x--;
         }
         timer -= Time.deltaTime;
-        if (timer <= 0)
-        {
-            timeout = true;
-            timer = 1.2f; // restart timer
-        }
+        if (timer <= 0){timeout = true; timer = 30f;}// restart timer
 
     }
 
@@ -85,8 +82,7 @@ public class global : MonoBehaviour
             animalIds.RemoveAt(0);
             return id;
         }
-        animalId++;
-        return animalId;
+        animalId++; return animalId;
     }
 
     public void returnPlantId(long id)
@@ -110,10 +106,10 @@ public class global : MonoBehaviour
         saveData.plants = plantsToSave;
 
         string json = JsonUtility.ToJson(saveData, true);
-        Debug.Log("json: " + json);// json {} is empty
+        
         string path = Application.persistentDataPath + "/saveGame.json";
         File.WriteAllText(path, json);
-
+        Debug.Log("Game saved!");
         //Debug.Log(Application.persistentDataPath);// gives me the path to see my saved data
     }
 
