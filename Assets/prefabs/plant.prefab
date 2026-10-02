@@ -133,7 +133,14 @@ MonoBehaviour:
   boxCollision: {fileID: 8207642791161711111}
   stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
   plantRenderer: {fileID: 3000096721615039439}
+  growth: 0.01
+  maxAge: 100
+  sticks: []
+  trunkRenderer: {fileID: 0}
+  growSpeed: 1
+  sick: 0
   dna:
+    growthSpeed: 5
     stemColor: {r: 0, g: 1, b: 0, a: 1}
     trunkSegment5Width: 0
     trunkSegment4Width: 0
@@ -153,12 +160,6 @@ MonoBehaviour:
     stickDownwardAngle: 45
     stickColor: {r: 0, g: 1, b: 0, a: 1}
     breedingFrequency: 5
-  growth: 0.01
-  maxAge: 100
-  sticks: []
-  trunkRenderer: {fileID: 0}
-  growSpeed: 1
-  sick: 0
 --- !u!114 &817885739125368993
 MonoBehaviour:
   m_ObjectHideFlags: 0

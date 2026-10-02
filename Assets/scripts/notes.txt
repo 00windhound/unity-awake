@@ -6,85 +6,32 @@ player
         i moved gravity chunk into 1 and 2 and nothing changed, 
         3,4,5 still were sidewase and broke but could climb up and down the hill
     i want to look strait up or a little past, looking up is locked too low
+    need to be able to jump
+    need to restore carry and bulldoze features
+        likely need to aim differently based on what movement mode im in
 
 plants are spawning in sidewase
-    need to write down the steps to import plants
-    make sure the plants are tracking the ground right
+    make sure i know how to import the plants right, there might be a rotation issue in blender
 
 plants
-    plants are spawning in up side down, causing them to be sick and die
-    the plant prefab is upside down
-    saved plants might not be spawning right. 
-    consider loading plants using the spawner to reduce spawn differences and confusion
-     
+    sick plants color and size don't show after loading, sick is restored but visual cues arent
+    not rendering in frame since using skinned mesh renderer
 
+get rid of living things class and script
 
-need to delete saved game
+save game
+    need to be able to delete saved game
+    need to reset the global id counter and list on load
+    display plant count based on running list 
 
-    steps
-        done! create and access running list with plants trying to add self
-        done! add plant to running list
-        done! create loop for plant update, with timer
-        done! global is now looping through the plant list and pausing to wait for the timer 
-            done! and its calling the new update function in the plants
-            done! transfer plant update contents into new update function
-            done! create check that if the list shrinks, im not double updating plants
-        done! save button on global script, create save function
-        done! on save, call each plants data function, recieve data
-        add data to a list(make sure list can be turned into json easily)
-        write data to json
-        create new button for load, or on world start trigger new load function
-        load function recreates plants, plants don't terminate if overlapping
-        plants automatically repopulate running list, the loop starts over
-        display plant count based on running list 
-
-    central script that collects and saves data
-        need to add the save script to the scene
-        plants are directly adding themselves to the running list not the spawner
-        if (worldManager.Instance != null)// put this in all kill spots or create one kill function
-        {
-            worldManager.Instance.allPlants.Remove(this);
-        }
-        holds a running list of objects or references to the objects
-        objects have a save function that passes its data
-        void Start()// plants can add themselves after deciding to live
-        {
-            worldManager.Instance.allPlants.Add(this);
-        }
-
-        public List<plants> allPlants = new List<plants>();// list for running save
-        worldManager.Instance.allPlants.Remove(this);// delete dead plant
-        public PlantSaveData GetSaveData()//when saving, this is in each plant
-{
-    PlantSaveData data = new PlantSaveData();
-
-    data.position = transform.position;
-    data.age = age;
-    data.dna = dna;
-
-    return data;
-}
-
-
-
-    can load data, creates a load spawner
-    can clear data
-    relies on minimal data and can handle other scripts being edited
-    saves plants, animals, and objects
-
-fix plants not rendering in frame since using skinned mesh renderer
-
-jumping
-
-save and load game
-
-first person
-fix pick up things
-ui needs load, save, clear data buttons, total plant count
-
-
-revamp new limbs, dont evolve what you don't have
+limbs
+    needs revamped
+    dont evolve what you don't have
     rather than do you have this item yes-no, its an array of objects
     that contain their type and dna for that type
+    do individual branches have their own dna, location, is all the dna lumped together
+    is it just a branch count that has this dna or does each branch have it's own dna,
+    or does a stick object have a mirror option and a quantity for how many sticks have the mirrored dna
+    you can have multiple sticks in the list each with their own dna, some have 
+        mirrored and quantity, while others have their own dna 
 
-bigger goal, watch 

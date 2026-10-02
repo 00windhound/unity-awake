@@ -44,7 +44,7 @@ public class plants : livingThing
         rb = GetComponent<Rigidbody>();
         applyDna();
         Resize();
-        maxAge = maxAge * (dna.growthSpeed * (dna.maxHeight * dna.maxThickness));
+        maxAge = maxAge * (dna.growthSpeed * 2f * (dna.maxHeight * dna.maxThickness * 3f));
         if(age == 0)
         {
             if(crowded()){Die();}
@@ -71,16 +71,17 @@ public class plants : livingThing
 
             RaycastHit hit;
             if(!Physics.Raycast(transform.position + UnityEngine.Vector3.up * .2f, UnityEngine.Vector3.down, out hit, 1f, groundLayer))
-            {healthy = false;}// cant see the ground
+            {healthy = false; UnityEngine.Debug.Log("sick because can't see ground " + id);}// cant see the ground
 
             if(UnityEngine.Vector3.Dot(transform.up, hit.normal) < 0.8f)
-            {healthy = false;}// not upright
+            {healthy = false; UnityEngine.Debug.Log("sick because not upright " + id);}// not upright
 
             if(age > maxAge)
-            {healthy = false;}// old age
+            {healthy = false; UnityEngine.Debug.Log("sick because old " + id);}// old age
 
             if(!healthy)
             {
+                UnityEngine.Debug.Log("deciding that im sick " + id);
                 var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
                 plantRenderer.material.color = sickColor;
                 growth -= 0.02f;
@@ -88,14 +89,11 @@ public class plants : livingThing
                 sick += 0.1f;
                 if (sick > .8f){Die();} 
             }
-            else // healthy
+            else if(healthy)
             {
+                UnityEngine.Debug.Log("deciding that im healthy " + id);
                 // make sure it's rooted
-                if(rb != null && !rb.isKinematic)
-                {
-                    rb.isKinematic = true;
-                    rb.useGravity = false;
-                }
+                if(rb != null && !rb.isKinematic) {rb.isKinematic = true;  rb.useGravity = false;}
                 // grow the plant
                 if (growth < dna.maxHeight || growth < dna.maxThickness)
                 {
@@ -129,6 +127,7 @@ public class plants : livingThing
 
     public void Resize()
     {
+        if (growth < 0.01f) {Die(); return;}// die if too small
         // resize collider
         roundCollision.radius = growth;
         roundCollision.height = growth * 2f;
@@ -177,7 +176,6 @@ public class plants : livingThing
         // apply trunk color
         plantRenderer.material.color = dna.stemColor;
         
-
         //change trunk shape keys
         int height5 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height5");
         trunkRenderer.SetBlendShapeWeight(height5, dna.trunkSegment5Width);
@@ -189,7 +187,6 @@ public class plants : livingThing
         trunkRenderer.SetBlendShapeWeight(height2, dna.trunkSegment2Width);
         int height1 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height1");
         trunkRenderer.SetBlendShapeWeight(height1, dna.trunkSegment1Width);
-
 
         // add branches
         for (int i = 0; i < dna.stickCount; i++)
