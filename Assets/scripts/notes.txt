@@ -25,13 +25,22 @@ save game
     display plant count based on running list 
 
 limbs
-    needs revamped
-    dont evolve what you don't have
-    rather than do you have this item yes-no, its an array of objects
-    that contain their type and dna for that type
-    do individual branches have their own dna, location, is all the dna lumped together
-    is it just a branch count that has this dna or does each branch have it's own dna,
-    or does a stick object have a mirror option and a quantity for how many sticks have the mirrored dna
-    you can have multiple sticks in the list each with their own dna, some have 
-        mirrored and quantity, while others have their own dna 
-
+    dont evolve what you don't have 
+    dna has two chunks for branches, each has
+        highest grow point
+        lowest grow point
+        quantities
+        divisions
+        depth
+    dna has one chunk for leaves
+    dna has one chunk for flowers
+    dna has one chunk for branches
+    branches always attach to the trunk, no stacking branches
+    on start each thing is created and added to a list
+    branch devisions and depth is combined into one object
+        more attachment points and more leaves
+    hurt: branches are shrunk, every other update the plant regrows it instead of growing
+        (make sure the leaves, flowers shrink too)
+    grafting: a new branch can be added to the list of 
+        branches(attached to base)
+        leaves(attached to branch)

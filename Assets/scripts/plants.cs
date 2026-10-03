@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 //using System.Drawing;
 
 
-public class plants : livingThing
+public class plants : MonoBehaviour
 {
     public LayerMask groundLayer; 
     public LayerMask plantLayer;
@@ -21,7 +21,8 @@ public class plants : livingThing
     public GameObject stickPrefab;
     //public Transform sticks;
     public Renderer plantRenderer;
-    
+    public long id = 0;
+    public float age = 0;
     public float growth = 0.1f;
     public float maxAge = 100f;
     public List<Stick> sticks = new List<Stick>();
@@ -34,16 +35,17 @@ public class plants : livingThing
     
     
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         plantRenderer = GetComponentInChildren<Renderer>();
         trunkRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         roundCollision = GetComponent<CapsuleCollider>();
         boxCollision = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
+
         applyDna();
         Resize();
+        if(id == 0){id = global.Instance.newPlantId();}
         maxAge = maxAge * (dna.growthSpeed * 2f * (dna.maxHeight * dna.maxThickness * 3f));
         if(age == 0)
         {
@@ -71,17 +73,17 @@ public class plants : livingThing
 
             RaycastHit hit;
             if(!Physics.Raycast(transform.position + UnityEngine.Vector3.up * .2f, UnityEngine.Vector3.down, out hit, 1f, groundLayer))
-            {healthy = false; UnityEngine.Debug.Log("sick because can't see ground " + id);}// cant see the ground
+            {healthy = false; }// cant see the ground
 
             if(UnityEngine.Vector3.Dot(transform.up, hit.normal) < 0.8f)
-            {healthy = false; UnityEngine.Debug.Log("sick because not upright " + id);}// not upright
+            {healthy = false; }// not upright
 
             if(age > maxAge)
-            {healthy = false; UnityEngine.Debug.Log("sick because old " + id);}// old age
+            {healthy = false; }// old age
 
             if(!healthy)
             {
-                UnityEngine.Debug.Log("deciding that im sick " + id);
+                
                 var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
                 plantRenderer.material.color = sickColor;
                 growth -= 0.02f;
@@ -91,7 +93,7 @@ public class plants : livingThing
             }
             else if(healthy)
             {
-                UnityEngine.Debug.Log("deciding that im healthy " + id);
+                
                 // make sure it's rooted
                 if(rb != null && !rb.isKinematic) {rb.isKinematic = true;  rb.useGravity = false;}
                 // grow the plant
@@ -211,6 +213,7 @@ public class plants : livingThing
     public PlantData Data()// for saving the game
     {
         PlantData data = new PlantData();
+        data.id = id;
         data.position = transform.position;
         data.age = age;
         data.growth = growth;
@@ -222,6 +225,7 @@ public class plants : livingThing
     public void LoadData(PlantData data)
     {
         transform.position = data.position;
+        id = data.id;
         age = data.age;
         growth = data.growth;
         dna = data.dna;
@@ -235,6 +239,7 @@ public class plants : livingThing
     public class PlantData
     {
         public UnityEngine.Vector3 position;
+        public long id;
         public float age;
         public float growth;
         public plantDNA dna;

@@ -9,7 +9,7 @@ public class global : MonoBehaviour
 {
     public static global Instance;
     public GameObject plantPrefab;
-    long plantId = 0;
+    public long plantId = 0;
     long animalId = 0;
     List<long> plantIds = new List<long>();
     List<long> animalIds = new List<long>();
@@ -35,9 +35,7 @@ public class global : MonoBehaviour
     void Update()
     {
         for(int i = 0; i < 20; i++)
-        {
-            //if(timeout){Debug.Log("timeout. x = " + x);}
-            
+        {   
             if (x < 0)
             {
                 if (timeout)
@@ -94,7 +92,6 @@ public class global : MonoBehaviour
 
     public void Save()
     {
-        //Debug.Log("save pressed!");
         plantsToSave.Clear();
         foreach (plants p in plantsRunningList)
         {
@@ -104,6 +101,8 @@ public class global : MonoBehaviour
         
         SaveData saveData = new SaveData();
         saveData.plants = plantsToSave;
+        saveData.plantId = plantId;
+        saveData.plantIds = plantIds;
 
         string json = JsonUtility.ToJson(saveData, true);
         
@@ -122,6 +121,7 @@ public class global : MonoBehaviour
         string json = File.ReadAllText(path);
         SaveData saveData = JsonUtility.FromJson<SaveData>(json);
         
+        //load plants
         foreach (plants.PlantData data in saveData.plants)
         {
         // create plant and give it the saved data
@@ -130,6 +130,11 @@ public class global : MonoBehaviour
 
         plant.LoadData(data);
         }
+
+        // load global id data
+        plantId = saveData.plantId;
+        plantIds = saveData.plantIds;
+
     }
 
 
@@ -138,6 +143,8 @@ public class global : MonoBehaviour
     public class SaveData
     {
         public List<plants.PlantData> plants;
+        public long plantId;
+        public List<long> plantIds;
         // public List<animals.AnimalData> animals;
     } 
 
@@ -145,34 +152,4 @@ public class global : MonoBehaviour
 }
 
 
-
-
-
-
-
-// this is where i will save, load, autosave, and delete the game
-/*
-public class SaveGame : MonoBehaviour
-{// maybe i don't want this page
-    public List<plants> allPlants = new List<plants>();// create the running list
-
-    public void SaveGame()
-{
-    SaveData saveData = new SaveData();
-
-    foreach (plants plant in worldManager.Instance.allPlants)
-    {
-        PlantSaveData plantData = plant.GetSaveData();
-
-        saveData.plants.Add(plantData);
-    }
-
-    string json = JsonUtility.ToJson(saveData, true);
-
-    string path =
-        Application.persistentDataPath + "/savegame.json";
-
-    File.WriteAllText(path, json);
-}
-
-}*/
+  
