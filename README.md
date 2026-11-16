@@ -1,7 +1,7 @@
 this simulation allows you to watch evolution take place.
 plants are able to change color and shape with each new generation.
 
-Tab: change controls
+Tab: change player movement controls
 E: pick up
 Shift: bulldoze
 

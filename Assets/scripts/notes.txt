@@ -1,17 +1,16 @@
 
 
+bake skinnedMeshRenderer into regular meshRenderer
+
 player
+    verticalVelocity is what's pointing the player down
+        without it the player won't fall
     gravity broke a lot of my movement modes
-        movement 1jumpy, 2 good, 3 broke, 4 broke, 5 broke
-        i moved gravity chunk into 1 and 2 and nothing changed, 
-        3,4,5 still were sidewase and broke but could climb up and down the hill
     i want to look strait up or a little past, looking up is locked too low
     need to be able to jump
     need to restore carry and bulldoze features
         likely need to aim differently based on what movement mode im in
 
-plants are spawning in sidewase
-    make sure i know how to import the plants right, there might be a rotation issue in blender
 
 plants
     sick plants color and size don't show after loading, sick is restored but visual cues arent

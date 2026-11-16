@@ -26,7 +26,7 @@ public class player : MonoBehaviour
     bool menuOpen = false;
     float gravity = -20f;
     float verticalVelocity = 0f;
-    public int movementStyle = 1;
+    public int movementStyle = 2;
     //float yaw;// camera left right
     //float pitch;// camera up down
     
@@ -34,10 +34,7 @@ public class player : MonoBehaviour
    
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
         playerTransform.localScale = new UnityEngine.Vector3(.5f, .5f, .5f);
-        //playerTransform.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
-        
     }
 
     
@@ -53,20 +50,17 @@ public class player : MonoBehaviour
         Vector3 direction;
         
 
-        // gravity
-                if (controller.isGrounded){if (verticalVelocity < 0){verticalVelocity = -2f;}}
-                else{verticalVelocity += gravity * Time.deltaTime;}
+        // gravity   wait what?
+        if (controller.isGrounded){if (verticalVelocity < 0){verticalVelocity = -2f;}}
+        else{verticalVelocity += gravity * Time.deltaTime;}
 
-
+        // change movement style with tab
         if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            movementStyle++;
-            if (movementStyle > 5){movementStyle = 1;}
-        }
+        {movementStyle++; if (movementStyle > 5){movementStyle = 1;}}
 
         switch (movementStyle)
         {
-            case 1:
+            case 1:// works but glitchy
                 // movement where camera looks
                 forward.y = 0;
                 right.y = 0;
@@ -82,7 +76,6 @@ public class player : MonoBehaviour
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
-                
                 break;
 
             case 2:
@@ -102,7 +95,7 @@ public class player : MonoBehaviour
                 cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
                 break;
 
-            case 3:
+            case 3:// broken idle sits facing down will slant up to face movement but not enough
                 // move where camera looks
                 forward.y = 0; 
                 right.y = 0;
@@ -124,7 +117,7 @@ public class player : MonoBehaviour
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
                 break;
 
-            case 4:
+            case 4:// broken
                 // movement where body faces
                 direction = transform.forward * move;
                 direction.y = verticalVelocity;
@@ -138,7 +131,7 @@ public class player : MonoBehaviour
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
                 break;
 
-            case 5:
+            case 5:// broken
                 //movement where body faces
                 direction = transform.forward * move;
                 direction.y = verticalVelocity;

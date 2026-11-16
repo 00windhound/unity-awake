@@ -80,7 +80,7 @@ public class plants : MonoBehaviour
 
             if(age > maxAge)
             {healthy = false; }// old age
-
+            
             if(!healthy)
             {
                 
@@ -207,6 +207,8 @@ public class plants : MonoBehaviour
 
         //change color
         plantRenderer.material.color = dna.stemColor;
+
+
     }
 
 

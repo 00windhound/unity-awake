@@ -552,7 +552,6 @@ GameObject:
   m_Component:
   - component: {fileID: 733274845}
   - component: {fileID: 733274844}
-  - component: {fileID: 733274846}
   - component: {fileID: 733274847}
   m_Layer: 0
   m_Name: global scripts
@@ -573,7 +572,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f229ccc982541848af5e27b1e42ebe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantPrefab: {fileID: 5431441364430614741, guid: 1f652494610f5324e8cc58941e31b90c, type: 3}
+  plantId: 0
   plantsRunningList: []
+  plantsToSave: []
 --- !u!4 &733274845
 Transform:
   m_ObjectHideFlags: 0
@@ -589,20 +591,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &733274846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733274843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f0463ab204c74447980b95a55b1f1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  age: 0
 --- !u!114 &733274847
 MonoBehaviour:
   m_ObjectHideFlags: 0

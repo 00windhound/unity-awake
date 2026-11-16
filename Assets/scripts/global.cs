@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Collections.Generic;// to make my save lists work
+//using System.Collections.Generic;// to make my save lists work
 using System.IO;// to save and load files
 using UnityEngine;
+using TMPro;
 
 public class global : MonoBehaviour
 {
     public static global Instance;
     public GameObject plantPrefab;
+    public TMP_Text plantCountText;
     public long plantId = 0;
     long animalId = 0;
     List<long> plantIds = new List<long>();
@@ -34,14 +36,17 @@ public class global : MonoBehaviour
 
     void Update()
     {
-        for(int i = 0; i < 20; i++)
+        for(int i = 0; i < 10; i++)
         {   
             if (x < 0)
             {
                 if (timeout)
                 {
                     x = plantsRunningList.Count;
+                    timer = 30f;
                     timeout = false;
+                    // display plant count in canvas
+                    plantCountText.text = "plants: " + plantsRunningList.Count;
                 }
             }
             else if (plantsRunningList[x])
@@ -51,8 +56,8 @@ public class global : MonoBehaviour
             }
             x--;
         }
-        timer -= Time.deltaTime;
-        if (timer <= 0){timeout = true; timer = 30f;}// restart timer
+        timer -= Time.deltaTime;// run the timer
+        if (timer <= 0){timeout = true;}
 
     }
 
