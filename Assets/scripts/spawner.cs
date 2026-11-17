@@ -63,7 +63,7 @@ public class spawner : MonoBehaviour
                 plantDNA babyDna = request.dna.Clone();
 
                 // dna mutation
-                int mutateGene = Random.Range(0, 17);
+                int mutateGene = Random.Range(0, 18);
                 switch(mutateGene)
                 {
                     case 0:// none

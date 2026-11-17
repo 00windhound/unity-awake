@@ -48,9 +48,10 @@ public class player : MonoBehaviour
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
         Vector3 direction;
-        
+        Vector3 horizontalMovement;
+        Vector3 movement;
 
-        // gravity   wait what?
+        // gravity 
         if (controller.isGrounded){if (verticalVelocity < 0){verticalVelocity = -2f;}}
         else{verticalVelocity += gravity * Time.deltaTime;}
 
@@ -76,6 +77,7 @@ public class player : MonoBehaviour
                 pitch -= mouseY * mouseSensitivity * Time.deltaTime;
                 pitch = Mathf.Clamp(pitch, -30f, 70f);
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
+
                 break;
 
             case 2:
@@ -95,19 +97,20 @@ public class player : MonoBehaviour
                 cameraPivot.rotation = Quaternion.Euler(pitch, transform.eulerAngles.y, 0f);
                 break;
 
-            case 3:// broken idle sits facing down will slant up to face movement but not enough
+            case 3:
                 // move where camera looks
                 forward.y = 0; 
                 right.y = 0;
                 forward.Normalize();
                 right.Normalize();
-                direction = forward * move + right * turn;
-                direction.y = verticalVelocity;
-                controller.Move(direction * moveSpeed * Time.deltaTime);
+                horizontalMovement = forward * move + right * turn;
+                movement = horizontalMovement * moveSpeed;
+                movement.y = verticalVelocity;
+                controller.Move(movement * Time.deltaTime);
                 // rotate to face movement
-                if (direction.sqrMagnitude > 0.01f) 
+                if (horizontalMovement.sqrMagnitude > 0.01f) 
                 {
-                    Quaternion target = Quaternion.LookRotation(direction);
+                    Quaternion target = Quaternion.LookRotation(horizontalMovement);
                     transform.rotation = Quaternion.Slerp(transform.rotation, target, 8f * Time.deltaTime);
                 }
                 // camera free orbit
@@ -117,11 +120,12 @@ public class player : MonoBehaviour
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
                 break;
 
-            case 4:// broken
+            case 4:
                 // movement where body faces
-                direction = transform.forward * move;
-                direction.y = verticalVelocity;
-                controller.Move(direction * moveSpeed * Time.deltaTime);
+                horizontalMovement = transform.forward * move;
+                movement = horizontalMovement * moveSpeed;
+                movement.y = verticalVelocity;
+                controller.Move(movement * Time.deltaTime);
                 // rotate with A D
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
                 // free orbit
@@ -131,11 +135,12 @@ public class player : MonoBehaviour
                 cameraPivot.rotation = Quaternion.Euler(pitch, yaw, 0f);
                 break;
 
-            case 5:// broken
+            case 5:
                 //movement where body faces
-                direction = transform.forward * move;
-                direction.y = verticalVelocity;
-                controller.Move(direction * moveSpeed * Time.deltaTime);
+                horizontalMovement = transform.forward * move;
+                movement = horizontalMovement * moveSpeed;
+                movement.y = verticalVelocity;
+                controller.Move(movement * Time.deltaTime);
                 // rotate with A D
                 transform.Rotate(Vector3.up, turn * turnSpeed * Time.deltaTime);
                 // camera fixed

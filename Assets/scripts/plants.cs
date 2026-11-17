@@ -24,7 +24,7 @@ public class plants : MonoBehaviour
     public long id = 0;
     public float age = 0;
     public float growth = 0.1f;
-    public float maxAge = 100f;
+    public float maxAge = 90f;
     public List<Stick> sticks = new List<Stick>();
     public SkinnedMeshRenderer trunkRenderer;
     public float growSpeed = 1f;
@@ -46,7 +46,7 @@ public class plants : MonoBehaviour
         applyDna();
         Resize();
         if(id == 0){id = global.Instance.newPlantId();}
-        maxAge = maxAge * (dna.growthSpeed * 2f * (dna.maxHeight * dna.maxThickness * 3f));
+        maxAge = maxAge * (dna.growthSpeed * 3f * (dna.maxHeight * dna.maxThickness * 4f));
         if(age == 0)
         {
             if(crowded()){Die();}
@@ -175,6 +175,7 @@ public class plants : MonoBehaviour
 
     public void applyDna()
     {
+        growSpeed = dna.growthSpeed;
         // apply trunk color
         plantRenderer.material.color = dna.stemColor;
         
