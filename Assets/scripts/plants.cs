@@ -8,25 +8,27 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-//using System.Drawing;
+
 
 
 public class plants : MonoBehaviour
 {
     public LayerMask groundLayer; 
-    public LayerMask plantLayer;
+    //public LayerMask plantLayer;
     public Transform trunk;
     public CapsuleCollider roundCollision;
     public BoxCollider boxCollision;
     public GameObject stickPrefab;
     //public Transform sticks;
-    public Renderer plantRenderer;
+    public Renderer meshRenderer;
+    public MeshFilter meshFilter;
+    public SkinnedMeshRenderer trunkRenderer;
     public long id = 0;
     public float age = 0;
     public float growth = 0.1f;
     public float maxAge = 90f;
     public List<Stick> sticks = new List<Stick>();
-    public SkinnedMeshRenderer trunkRenderer;
+    
     public float growSpeed = 1f;
     float lastUpdateTime;
     public float sick = 0f;
@@ -37,13 +39,15 @@ public class plants : MonoBehaviour
 
     void Start()
     {
-        plantRenderer = GetComponentInChildren<Renderer>();
+        meshFilter = GetComponentInChildren<MeshFilter>();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        UnityEngine.Debug.Log(meshRenderer);
         trunkRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         roundCollision = GetComponent<CapsuleCollider>();
         boxCollision = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
 
-        applyDna();
+        applyDna();  
         Resize();
         if(id == 0){id = global.Instance.newPlantId();}
         maxAge = maxAge * (dna.growthSpeed * 3f * (dna.maxHeight * dna.maxThickness * 4f));
@@ -85,7 +89,7 @@ public class plants : MonoBehaviour
             {
                 
                 var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
-                plantRenderer.material.color = sickColor;
+                meshRenderer.material.color = sickColor;
                 growth -= 0.02f;
                 Resize();
                 sick += 0.1f;
@@ -106,7 +110,7 @@ public class plants : MonoBehaviour
                 {
                     sick -= 0.1f; 
                     var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
-                    plantRenderer.material.color = recoverColor;
+                    meshRenderer.material.color = recoverColor;
                 }
                 // breeding
                 if (age % dna.breedingFrequency == 0 && !crowded() && growth > dna.maxHeight * 0.8f)
@@ -177,7 +181,7 @@ public class plants : MonoBehaviour
     {
         growSpeed = dna.growthSpeed;
         // apply trunk color
-        plantRenderer.material.color = dna.stemColor;
+        trunkRenderer.material.color = dna.stemColor;
         
         //change trunk shape keys
         int height5 = trunkRenderer.sharedMesh.GetBlendShapeIndex("height5");
@@ -206,10 +210,24 @@ public class plants : MonoBehaviour
             sticks.Add(stickData);
         }
 
-        //change color
-        plantRenderer.material.color = dna.stemColor;
+        
+        // bake
+        Mesh trunkMesh = new Mesh();
+        trunkMesh.name = "Baked Trunk";
+        
+
+    // Capture the current shape-key deformation
+    trunkRenderer.BakeMesh(trunkMesh);
 
 
+    // Assign baked geometry and materials
+    meshFilter.sharedMesh = trunkMesh;
+    //UnityEngine.Debug.Log(meshRenderer);// null
+    meshRenderer.sharedMaterials = trunkRenderer.sharedMaterials;
+
+    // Disable the original renderer
+    trunkRenderer.enabled = false;
+    
     }
 
 

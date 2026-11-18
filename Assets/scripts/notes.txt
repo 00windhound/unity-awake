@@ -1,14 +1,9 @@
 
 
 bake skinnedMeshRenderer into regular meshRenderer
+phase out plantRenderer
 
 player
-    gravity
-        verticalVelocity is what's pointing the player down
-        without it the player won't fall
-        where is controller.Move()
-
-    gravity broke a lot of my movement modes
     i want to look strait up or a little past, looking up is locked too low
     need to be able to jump
     need to restore carry and bulldoze features
