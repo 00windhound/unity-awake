@@ -1,17 +1,19 @@
 
 
-bake skinnedMeshRenderer into regular meshRenderer
-phase out plantRenderer
+windows - analysis - profiler
 
 player
     i want to look strait up or a little past, looking up is locked too low
     need to be able to jump
     need to restore carry and bulldoze features
         likely need to aim differently based on what movement mode im in
+        the player just has a character controller so it's not colliding with anything
 
 
 plants
-    check if plants are kinematic, which one should they be?
+    use LODGroup component to reduce rendering when far away
+        might have to redo my baked mesh
+        create renderers as children to assign to LODs
     sick plants color and size don't show after loading, sick is restored but visual cues arent
     not rendering in frame since using skinned mesh renderer
 

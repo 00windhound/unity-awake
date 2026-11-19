@@ -84,6 +84,7 @@ public class interactable : MonoBehaviour
         {
         rb.isKinematic = false;
         rb.useGravity = true;
+        UnityEngine.Debug.Log("i was bulldozed");
         }
     }
 }

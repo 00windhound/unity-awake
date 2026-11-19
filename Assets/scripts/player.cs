@@ -194,6 +194,7 @@ public class player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        UnityEngine.Debug.Log("collision entered");
         if (bulldozing)
         {
             interactable interactableItem = collision.gameObject.GetComponent<interactable>();
