@@ -17,8 +17,6 @@ public class global : MonoBehaviour
     List<long> animalIds = new List<long>();
     public List<plants> plantsRunningList = new List<plants>();// create the running list
     public List<plants.PlantData> plantsToSave = new  List<plants.PlantData>();
-    long totalPlants = 0;
-    long totalAnimals = 0;
     float timer = 30f;
     bool timeout = false;
     int x = 0;
@@ -36,7 +34,7 @@ public class global : MonoBehaviour
 
     void Update()
     {
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 20; i++)
         {   
             if (x < 0)
             {
@@ -63,7 +61,6 @@ public class global : MonoBehaviour
 
     public long newPlantId()
     {
-        totalPlants++;
         // check if there are any returned plant ids to reuse
         if (plantIds.Count > 0)
         {
@@ -77,7 +74,6 @@ public class global : MonoBehaviour
 
     public long newAnimalId()
     {
-        totalAnimals++;
         // check if there are any returned animal ids to reuse
         if (animalIds.Count > 0)
         {
@@ -89,10 +85,12 @@ public class global : MonoBehaviour
     }
 
     public void returnPlantId(long id)
-    {totalPlants--; plantIds.Add(id);}
+    {
+        if(id <= plantsRunningList.Count)
+        {plantIds.Add(id);}
+    }
 
-    public void returnAnimalId(long id)
-    {totalAnimals--; animalIds.Add(id);}
+    public void returnAnimalId(long id){animalIds.Add(id);}
 
 
     public void Save()
@@ -131,6 +129,7 @@ public class global : MonoBehaviour
         {
         // create plant and give it the saved data
         GameObject newPlant = Instantiate(plantPrefab, data.position, Quaternion.identity);
+
         plants plant = newPlant.GetComponent<plants>();
 
         plant.LoadData(data);

@@ -11,6 +11,7 @@ player
 
 
 plants
+    check if plants are kinematic, which one should they be?
     sick plants color and size don't show after loading, sick is restored but visual cues arent
     not rendering in frame since using skinned mesh renderer
 

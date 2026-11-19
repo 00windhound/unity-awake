@@ -26,7 +26,7 @@ public class plants : MonoBehaviour
     public long id = 0;
     public float age = 0;
     public float growth = 0.1f;
-    public float maxAge = 90f;
+    public float maxAge = 70f;
     public List<Stick> sticks = new List<Stick>();
     
     public float growSpeed = 1f;
@@ -41,11 +41,12 @@ public class plants : MonoBehaviour
     {
         meshFilter = GetComponentInChildren<MeshFilter>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
-        UnityEngine.Debug.Log(meshRenderer);
+        //UnityEngine.Debug.Log("id: " + id + meshRenderer);
         trunkRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         roundCollision = GetComponent<CapsuleCollider>();
         boxCollision = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
+
 
         applyDna();  
         Resize();
@@ -89,7 +90,7 @@ public class plants : MonoBehaviour
             {
                 
                 var sickColor = Color.Lerp(dna.stemColor, Color.black, sick);
-                meshRenderer.material.color = sickColor;
+                //meshRenderer.material.color = sickColor;
                 growth -= 0.02f;
                 Resize();
                 sick += 0.1f;
@@ -110,7 +111,7 @@ public class plants : MonoBehaviour
                 {
                     sick -= 0.1f; 
                     var recoverColor = Color.Lerp(dna.stemColor, Color.black, sick);
-                    meshRenderer.material.color = recoverColor;
+                    //meshRenderer.material.color = recoverColor;
                 }
                 // breeding
                 if (age % dna.breedingFrequency == 0 && !crowded() && growth > dna.maxHeight * 0.8f)
@@ -210,23 +211,19 @@ public class plants : MonoBehaviour
             sticks.Add(stickData);
         }
 
-        
+      
         // bake
         Mesh trunkMesh = new Mesh();
         trunkMesh.name = "Baked Trunk";
-        
-
-    // Capture the current shape-key deformation
-    trunkRenderer.BakeMesh(trunkMesh);
-
-
-    // Assign baked geometry and materials
-    meshFilter.sharedMesh = trunkMesh;
-    //UnityEngine.Debug.Log(meshRenderer);// null
-    meshRenderer.sharedMaterials = trunkRenderer.sharedMaterials;
-
-    // Disable the original renderer
-    trunkRenderer.enabled = false;
+        meshRenderer = trunkRenderer.gameObject.AddComponent<MeshRenderer>();
+        // Capture the current shape-key deformation
+        trunkRenderer.BakeMesh(trunkMesh);
+        // Assign baked geometry and materials
+        meshFilter.sharedMesh = trunkMesh;
+        meshRenderer.sharedMaterials = trunkRenderer.sharedMaterials;
+        // Disable the original renderer
+        trunkRenderer.enabled = false;
+    
     
     }
 

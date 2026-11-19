@@ -123,20 +123,18 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  plantLayer:
-    serializedVersion: 2
-    m_Bits: 64
   trunk: {fileID: 1739139370012602447}
   roundCollision: {fileID: 4496762808961299331}
   boxCollision: {fileID: 8207642791161711111}
   stickPrefab: {fileID: 919132149155446097, guid: 5361cefdb26bea5488bd001b16247dcc, type: 3}
-  plantRenderer: {fileID: 3000096721615039439}
+  meshRenderer: {fileID: 0}
+  meshFilter: {fileID: 0}
+  trunkRenderer: {fileID: 0}
   id: 0
   age: 0
   growth: 0.01
   maxAge: 100
   sticks: []
-  trunkRenderer: {fileID: 0}
   growSpeed: 1
   sick: 0
   dna:
@@ -185,7 +183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1739139370012602447}
   - component: {fileID: 3000096721615039439}
-  - component: {fileID: 4864444986411921396}
   - component: {fileID: 1957429270631978844}
   m_Layer: 0
   m_Name: trunk
@@ -267,48 +264,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_DirtyAABB: 0
---- !u!23 &4864444986411921396
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6274166683741979450}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1957429270631978844
 MeshFilter:
   m_ObjectHideFlags: 0
