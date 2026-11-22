@@ -34,13 +34,15 @@ public class global : MonoBehaviour
 
     void Update()
     {
+        // display plant count in canvas
+        plantCountText.text = "plants: " + plantsRunningList.Count;
         for(int i = 0; i < 20; i++)
         {   
             if (x < 0)
             {
                 if (timeout)
                 {
-                    x = plantsRunningList.Count;
+                    x = plantsRunningList.Count - 1;
                     timer = 30f;
                     timeout = false;
                     // display plant count in canvas

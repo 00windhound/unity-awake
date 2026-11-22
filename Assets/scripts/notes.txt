@@ -3,7 +3,6 @@
 windows - analysis - profiler
 
 player
-    i want to look strait up or a little past, looking up is locked too low
     need to be able to jump
     need to restore carry and bulldoze features
         likely need to aim differently based on what movement mode im in
@@ -12,6 +11,11 @@ player
 
 plants
     use LODGroup component to reduce rendering when far away
+        renderers have to be assigned to a LOD in order to change
+        how do i assign renderers to the LODs
+        i'll have to have the pre existing mesh renderer in the inspector
+        Decimate Modifier - learn what this is or a Unity mesh simplification package
+        bake the plant then symplify the baked mesh
         might have to redo my baked mesh
         create renderers as children to assign to LODs
     sick plants color and size don't show after loading, sick is restored but visual cues arent
