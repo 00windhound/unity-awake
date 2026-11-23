@@ -11,6 +11,8 @@ player
 
 plants
     use LODGroup component to reduce rendering when far away
+        the new lods are causing issues in global
+            only lod0, culled has something left over
         renderers have to be assigned to a LOD in order to change
         how do i assign renderers to the LODs
         i'll have to have the pre existing mesh renderer in the inspector
