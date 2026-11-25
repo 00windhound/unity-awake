@@ -14,20 +14,23 @@ using System.Runtime.InteropServices;
 public class plants : MonoBehaviour
 {
     public LayerMask groundLayer; 
-    //public LayerMask plantLayer;
     public Transform trunk;
     public CapsuleCollider roundCollision;
     public BoxCollider boxCollision;
-    public GameObject stickPrefab;
-    public Renderer lod0Renderer;
+
     public MeshFilter lod0Filter;
+    public Renderer lod0Renderer;
+    public Transform lod0transform;
     public SkinnedMeshRenderer trunkRenderer;
+
+    public GameObject stickPrefab;// maybe just do a skinnedMeshRenderer like the trunk
+    
+    
     public long id = 0;
     public float age = 0;
     public float growth = 0.1f;
     public float maxAge = 1f;
     public List<Stick> sticks = new List<Stick>();
-    
     public float growSpeed = 1f;
     float lastUpdateTime;
     public float sick = 0f;
@@ -146,8 +149,8 @@ public class plants : MonoBehaviour
         if (growth > dna.maxThickness) y = dna.maxThickness;
         if (growth > dna.maxHeight) z = dna.maxHeight;
         x = dna.trunkFlat * y; //is this right?
-        trunk.localScale = new UnityEngine.Vector3(x, y, z);
-        trunk.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
+        lod0transform.localScale = new UnityEngine.Vector3(x, y, z);
+        lod0transform.localPosition = new UnityEngine.Vector3(0f, 0f, 0f);
         
         // resizing sticks
          foreach (Stick s in sticks)
@@ -211,8 +214,8 @@ public class plants : MonoBehaviour
       
         // bake
         Mesh trunkMesh = new Mesh();
-        //trunkMesh.name = "Baked Trunk"; // do i need this?
-        //meshRenderer = trunkRenderer.gameObject.AddComponent<MeshRenderer>();
+        // name the mesh
+        trunkMesh.name = "bakedTrunk";
         // Capture the current shape-key deformation
         trunkRenderer.BakeMesh(trunkMesh);
         // Assign baked geometry and materials
