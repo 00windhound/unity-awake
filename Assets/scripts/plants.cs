@@ -214,14 +214,10 @@ public class plants : MonoBehaviour
       
         // bake
         Mesh trunkMesh = new Mesh();
-        // name the mesh
         trunkMesh.name = "bakedTrunk";
-        // Capture the current shape-key deformation
         trunkRenderer.BakeMesh(trunkMesh);
-        // Assign baked geometry and materials
         lod0Filter.sharedMesh = trunkMesh;
         lod0Renderer.sharedMaterials = trunkRenderer.sharedMaterials;
-        // Disable the original renderer
         trunkRenderer.enabled = false;
     
     
